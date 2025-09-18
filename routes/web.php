@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PlatformController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,6 +22,7 @@ Route::middleware('auth')->group(function () {
 // Authenticated routes
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('platforms', PlatformController::class);
+    Route::resource('users', UserController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Platform;
+use App\Models\User;
+use App\Notifications\PlatformCreationNotification;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -38,7 +40,15 @@ class PlatformController extends Controller
             'base_price' => 'required|numeric|min:0|max:999999.99',
         ]);
 
-        Platform::create($validated);
+        $platform = Platform::create($validated);
+
+        $creator = auth()->user(); // текущий залогиненный
+        foreach (User::role('admin')->get() as $admin) {
+            $admin->notify(new PlatformCreationNotification($creator));
+        }
+        foreach (User::role('manager')->get() as $manager) {
+            $manager->notify(new PlatformCreationNotification($creator));
+        }
 
         return redirect()
             ->route('platforms.index')
