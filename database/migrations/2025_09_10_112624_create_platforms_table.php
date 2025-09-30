@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('platforms', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name'); 
             $table->enum('type', ['telegram', 'youtube', 'facebook', 'website']);
-            $table->text('description');
-            $table->decimal('base_price', 10, 2);
+            $table->text('description')->nullable(); // теперь необязательное
+            $table->char('currency', 3)->default('USD'); // базовая валюта для прайсов
+            $table->string('timezone', 64)->default('Europe/Sofia'); // локальная TZ
+            $table->boolean('is_active')->default(true); // активна ли площадка
             $table->timestamps();
         });
     }

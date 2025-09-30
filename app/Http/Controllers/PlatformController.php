@@ -25,8 +25,10 @@ class PlatformController extends Controller
      */
     public function create()
     {
-        return view('platforms.create');
+        $timezones = \DateTimeZone::listIdentifiers();
+        return view('platforms.create', compact('timezones'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -36,8 +38,10 @@ class PlatformController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'type' => 'required|in:telegram,youtube,facebook,website',
-            'description' => 'required|string|max:255',
-            'base_price' => 'required|numeric|min:0|max:999999.99',
+            'description' => 'required|string|max:1000',
+            'currency' => 'required|string|in:' . implode(',', array_keys(Platform::$currencies)),
+            'timezone' => 'required|string|in:' . implode(',', \DateTimeZone::listIdentifiers()),
+            'is_active' => 'boolean',
         ]);
 
         $platform = Platform::create($validated);
@@ -80,7 +84,9 @@ class PlatformController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|in:telegram,youtube,facebook,website',
             'description' => 'required|string|max:255',
-            'base_price' => 'required|numeric|min:0|max:999999.99',
+            'currency' => 'required|string|in:' . implode(',', array_keys(Platform::$currencies)),
+            'timezone' => 'required|string|in:' . implode(',', \DateTimeZone::listIdentifiers()),
+            'is_active' => 'boolean',
         ]);
 
         $platform->update($validated);

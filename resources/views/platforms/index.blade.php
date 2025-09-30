@@ -18,7 +18,9 @@
                         <th>Name</th>
                         <th>Platform type</th>
                         <th>Description</th>
-                        <th>Price</th>
+                        <th>Currency</th>
+                        <th>Timezone</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,7 +29,15 @@
                             <td>{{ $platform->name }}</td>
                             <td>{{ $platform->type }}</td>
                             <td>{{ $platform->description }}</td>
-                            <td>{{ $platform->base_price }}</td>
+                            <td>{{ $platform->currency }}</td>
+                            <td>{{ $platform->timezone }}</td>
+                            <td>
+                                @if($platform->is_active)
+                                    <span class="badge badge-success">Active</span>
+                                @else
+                                    <span class="badge badge-danger">Inactive</span>
+                                @endif
+                            </td>
                             <td>
                                 <div class="btn-group">
                                     <a href="{{ route('platforms.edit', $platform) }}" class="btn btn-warning btn-sm">

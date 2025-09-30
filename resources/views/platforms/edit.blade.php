@@ -42,8 +42,40 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="base_price" class="form-label">Price</label>
-                    <input type="number" step="0.01" name="base_price" id="base_price" class="form-control" value="{{ old('base_price', $platform->base_price) }}">
+                    <label for="currency" class="form-label">Currency</label>
+                        <select name="currency" id="currency" class="form-control @error('currency') is-invalid @enderror" required>
+                        @foreach(\App\Models\Platform::$currencies as $code => $name)
+                            <option value="{{ $code }}" {{ old('currency', $platform->currency ?? '') == $code ? 'selected' : '' }}>
+                                {{ $code }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="timezone" class="form-label">Timezone</label>
+                    <select name="timezone" id="timezone" class="form-select">
+                        @foreach($timezones as $tz)
+                            <option value="{{ $tz }}" @selected(old('timezone') === $tz)>
+                                {{ $tz }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" 
+                            class="custom-control-input" 
+                            id="is_active" 
+                            name="is_active" 
+                            value="1"
+                            {{ old('is_active', $user->is_active ?? true) ? 'checked' : '' }}>
+                        <label class="custom-control-label" for="is_active">Active</label>
+                    </div>
+                    @error('is_active')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn btn-success">Update platform</button>

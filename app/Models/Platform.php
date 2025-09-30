@@ -13,6 +13,14 @@ class Platform extends Model
         'name',
         'type',
         'description',
-        'base_price',
+        'currency',
+        'timezone',
+        'is_active',
+    ];
+
+    public static $currencies = [
+        'USD' => 'US Dollar',
+        'EUR' => 'Euro',
+        'BGN' => 'Bulgarian Lev'
     ];
 }
