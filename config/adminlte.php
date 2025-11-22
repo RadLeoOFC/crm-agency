@@ -321,6 +321,21 @@ return [
             'can' => 'manage-blog',
         ],
         [
+            'text' => 'Clients',
+            'url'  => 'clients',
+            'icon' => 'fas fa-fw fa-users',
+        ],
+        [
+            'text' => 'All Users',
+            'url'  => 'users',
+            'icon' => 'fas fa-fw fa-users',
+        ],
+        [
+            'text' => 'Platforms',
+            'url'  => 'platforms',
+            'icon' => 'fas fa-fw fa-platforms',
+        ],
+        [
             'text' => 'pages',
             'url' => 'admin/pages',
             'icon' => 'far fa-fw fa-file',

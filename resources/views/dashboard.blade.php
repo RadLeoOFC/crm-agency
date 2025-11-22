@@ -1,17 +1,20 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('adminlte::page')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
+@section('title', 'Dashboard')
+
+@section('content')
+
+
+<div class="dashboard-container">
+    <h1 style="font-size: 50px; margin-bottom:30px">
+        Добро пожаловать на рекламную площадку
+    </h1>
+
+    <div class="button-container">
+        <a href="{{ url('/') }}" class="btn btn-primary mb-2">На домашнюю страницу</a>
     </div>
-</x-app-layout>
+
+</div>
+
+@stop
+

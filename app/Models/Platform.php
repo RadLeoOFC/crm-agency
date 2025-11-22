@@ -23,4 +23,20 @@ class Platform extends Model
         'EUR' => 'Euro',
         'BGN' => 'Bulgarian Lev'
     ];
+
+    public function priceLists()
+    {
+        return $this->hasMany(PriceList::class);
+    }
+
+    public function slots()
+    {
+        return $this->hasMany(Slot::class);
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
 }
