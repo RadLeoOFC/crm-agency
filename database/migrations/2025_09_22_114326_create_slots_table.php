@@ -19,8 +19,6 @@ return new class extends Migration
 
             // Опционально: из какого прайс-листа/правила он родился
             $table->foreignId('price_list_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('price_list_rule_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('price_override_id')->nullable()->constrained()->nullOnDelete();
 
             // Время
             $table->dateTime('starts_at');

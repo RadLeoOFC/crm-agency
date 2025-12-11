@@ -6,42 +6,30 @@ use App\Models\Platform;
 use App\Models\User;
 use App\Notifications\PlatformCreationNotification;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 
 class PlatformController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-        $platforms = Platform::all();
+        $platforms = Platform::latest('id')->paginate(15)->withQueryString();
         return view('platforms.index', compact('platforms'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $timezones = \DateTimeZone::listIdentifiers();
         return view('platforms.create', compact('timezones'));
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'type' => 'required|in:telegram,youtube,facebook,website',
-            'description' => 'required|string|max:1000',
-            'currency' => 'required|string|in:' . implode(',', array_keys(Platform::$currencies)),
-            'timezone' => 'required|string|in:' . implode(',', \DateTimeZone::listIdentifiers()),
-            'is_active' => 'boolean',
+            'name'        => 'required|string|max:255',
+            'type'        => 'required|in:telegram,youtube,facebook,website',
+            'description' => 'nullable|string|max:1000',
+            'currency'    => 'required|string|in:' . implode(',', array_keys(Platform::$currencies)),
+            'timezone'    => 'required|string|in:' . implode(',', \DateTimeZone::listIdentifiers()),
+            'is_active'   => 'boolean',
         ]);
 
         $platform = Platform::create($validated);
@@ -54,57 +42,41 @@ class PlatformController extends Controller
             $manager->notify(new PlatformCreationNotification($creator));
         }
 
-        return redirect()
-            ->route('platforms.index')
-            ->with('success', 'Platform registered successfully.');
+        return redirect()->route('platforms.index')->with('success','Platform registered successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Platform $platform)
     {
-        //
+        $platform->loadCount(['priceLists','slots','bookings']);
+        return view('platforms.show', compact('platform'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Platform $platform)
     {
-        return view('platforms.edit', compact('platform'));
+        $timezones = \DateTimeZone::listIdentifiers();
+        return view('platforms.edit', compact('platform','timezones'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Platform $platform)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'type' => 'required|in:telegram,youtube,facebook,website',
-            'description' => 'required|string|max:255',
-            'currency' => 'required|string|in:' . implode(',', array_keys(Platform::$currencies)),
-            'timezone' => 'required|string|in:' . implode(',', \DateTimeZone::listIdentifiers()),
-            'is_active' => 'boolean',
+            'name'        => 'required|string|max:255',
+            'type'        => 'required|in:telegram,youtube,facebook,website',
+            'description' => 'nullable|string|max:1000',
+            'currency'    => 'required|string|in:' . implode(',', array_keys(Platform::$currencies)),
+            'timezone'    => 'required|string|in:' . implode(',', \DateTimeZone::listIdentifiers()),
+            'is_active'   => 'boolean',
         ]);
 
         $platform->update($validated);
 
-        return redirect()
-            ->route('platforms.index')
-            ->with('success', 'Platform updated successfully.');
+        return redirect()->route('platforms.index')->with('success','Platform updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Platform $platform)
     {
         $platform->delete();
 
-        return redirect()
-            ->route('platforms.index')
-            ->with('success', 'Platform deleted successfully.');
+        return redirect()->route('platforms.index')->with('success','Platform deleted successfully.');
     }
 }

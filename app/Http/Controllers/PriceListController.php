@@ -2,134 +2,113 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\PriceList;
 use App\Models\Platform;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PriceListController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $pricelists = PriceList::all();
+        $pricelists = PriceList::with('platform')
+            ->latest('id')
+            ->paginate(15)
+            ->withQueryString();
+
         return view('pricelists.index', compact('pricelists'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        // Получаем список всех активных площадок
-        $platforms = Platform::where('is_active', true)->get();
-
-        // Доступные валюты (при необходимости — можно вынести в конфиг)
-        $currencies = ['USD', 'EUR', 'BGN', 'GBP', 'RUB'];
-
-        // Список популярных таймзон (можно заменить на CarbonTimeZone::listIdentifiers())
-        $timezones = [
-            'Europe/Sofia', 'Europe/Moscow', 'Europe/Berlin', 
-            'Asia/Dubai', 'UTC'
-        ];
+        $platforms  = Platform::where('is_active', true)->orderBy('name')->get();
+        $currencies = ['USD','EUR','BGN','GBP','RUB']; // валюта прайс-листа — своя
+        $timezones  = ['Europe/Sofia','Europe/Moscow','Europe/Berlin','Asia/Dubai','UTC'];
 
         return view('pricelists.create', [
-            'pricelist' => new PriceList(),
-            'platforms' => $platforms,
+            'pricelist'  => new PriceList(),
+            'platforms'  => $platforms,
             'currencies' => $currencies,
-            'timezones' => $timezones,
+            'timezones'  => $timezones,
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        // 1️⃣ Валидация данных формы
         $validated = $request->validate([
-            'platform_id' => 'required|exists:platforms,id',
-            'name'        => 'required|string|max:255',
-            'base_price'  => 'required|numeric|min:0',
-            'currency'    => 'required|string|size:3',
-            'timezone'    => 'required|string|max:64',
-            'starts_at'   => 'nullable|date',
-            'ends_at'     => 'nullable|date|after:starts_at',
-            'is_active'   => 'boolean',
+            'platform_id'            => ['required','exists:platforms,id'],
+            'name'                   => ['required','string','max:255'],
+            'currency'               => ['required','string','size:3'],
+            'is_active'              => ['sometimes','boolean'],
+            'valid_from'             => ['nullable','date'],
+            'valid_to'               => ['nullable','date','after_or_equal:valid_from'],
+            'timezone'               => ['required','string','max:64'],
+            'default_slot_duration'  => ['required','integer','min:5','max:480'],
         ]);
 
-        // 2️⃣ Создаём прайс-лист
-        $priceList = \App\Models\PriceList::create($validated);
+        $priceList = PriceList::create($validated);
 
-        // 3️⃣ Перенаправление с сообщением
         return redirect()
-            ->route('pricelists.show', $priceList)
-            ->with('success', 'Прайс-лист успешно создан.');
+            ->route('pricelists.index', $priceList)
+            ->with('success','Прайс-лист создан. Теперь добавьте правила и исключения.');
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(PriceList $pricelist)
     {
-        //
+        $pricelist->load(['platform','rules','overrides']);
+        $pricelists = PriceList::with('platform')
+            ->latest('id')
+            ->paginate(15)
+            ->withQueryString();
+        return view('pricelists.show', compact('pricelist', 'pricelists'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(PriceList $pricelist)
     {
-        // Аналогично create(), но с уже существующим объектом
-        $platforms = Platform::where('is_active', true)->get();
-        $currencies = ['USD', 'EUR', 'BGN', 'GBP', 'RUB'];
-        $timezones = [
-            'Europe/Sofia', 'Europe/Moscow', 'Europe/Berlin', 
-            'Asia/Dubai', 'UTC'
-        ];
+        $platforms  = Platform::where('is_active', true)->orderBy('name')->get();
+        $currencies = ['USD','EUR','BGN','GBP','RUB'];
+        $timezones  = ['Europe/Sofia','Europe/Moscow','Europe/Berlin','Asia/Dubai','UTC'];
 
-        return view('pricelists.edit', [
-            'pricelist' => $pricelist,
-            'platforms' => $platforms,
-            'currencies' => $currencies,
-            'timezones' => $timezones,
-        ]);
+        return view('pricelists.edit', compact('pricelist','platforms','currencies','timezones'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, \App\Models\PriceList $priceList)
+    public function update(Request $request, PriceList $pricelist)
     {
-        // 1️⃣ Валидация данных формы
         $validated = $request->validate([
-            'platform_id' => 'required|exists:platforms,id',
-            'name'        => 'required|string|max:255',
-            'base_price'  => 'required|numeric|min:0',
-            'currency'    => 'required|string|size:3',
-            'timezone'    => 'required|string|max:64',
-            'starts_at'   => 'nullable|date',
-            'ends_at'     => 'nullable|date|after:starts_at',
-            'is_active'   => 'boolean',
+            'platform_id'            => ['required','exists:platforms,id'],
+            'name'                   => ['required','string','max:255'],
+            'currency'               => ['required','string','size:3'],
+            'is_active'              => ['sometimes','boolean'],
+            'valid_from'             => ['nullable','date'],
+            'valid_to'               => ['nullable','date','after_or_equal:valid_from'],
+            'timezone'               => ['required','string','max:64'],
+            'default_slot_duration'  => ['required','integer','min:5','max:480'],
         ]);
 
-        // 2️⃣ Обновляем данные
-        $priceList->update($validated);
+        $pricelist->update($validated);
 
-        // 3️⃣ Перенаправление на страницу просмотра
         return redirect()
-            ->route('pricelists.show', $priceList)
-            ->with('success', 'Прайс-лист успешно обновлён.');
+            ->route('pricelists.index', $pricelist)
+            ->with('success','Прайс-лист обновлён.');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(PriceList $pricelist)
     {
-        //
+        $pricelist->delete();
+
+        return redirect()
+            ->route('pricelists.index')
+            ->with('success','Price list deleted successfully.');
     }
+
+    public function generateSlots(PriceList $pricelist)
+    {
+        $service = app(\App\Services\SlotGeneratorService::class);
+        $created = $service->generateForPriceList($pricelist);
+
+        return redirect()
+            ->route('pricelists.show', $pricelist)
+            ->with('success', "Generated {$created} slots.");
+    }
+
 }

@@ -21,6 +21,7 @@
                         <th>Currency</th>
                         <th>Timezone</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>

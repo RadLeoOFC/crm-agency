@@ -11,8 +11,18 @@ class Booking extends Model
 
     protected $fillable = [
         'platform_id','client_id','slot_id','starts_at','ends_at',
-        'price','status','notes'
+        'price','status','notes',
+        'list_price','discount_amount','currency','promo_code_id', // NEW
     ];
+
+    protected $casts = [
+        'starts_at' => 'datetime',
+        'ends_at'   => 'datetime',
+        'price'     => 'decimal:2',
+        'list_price'=> 'decimal:2',
+        'discount_amount' => 'decimal:2',
+    ];
+
 
     public function client()
     {

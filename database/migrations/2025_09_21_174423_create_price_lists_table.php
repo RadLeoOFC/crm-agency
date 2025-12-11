@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('', function (Blueprint $table) {
+        Schema::create('price_lists', function (Blueprint $table) {
             $table->id();
             $table->foreignId('platform_id')->constrained()->cascadeOnDelete();
             $table->string('name');

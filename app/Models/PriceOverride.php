@@ -11,4 +11,16 @@ class PriceOverride extends Model
     {
         return $this->belongsTo(PriceList::class); 
     }
+
+    protected static function booted()
+    {
+        static::retrieved(function ($model) {
+            \Log::info("Override loaded", [
+                'id' => $model->id,
+                'price_list_id' => $model->price_list_id,
+                'matched_pricelist' => request()->route('pricelist')->id ?? null,
+            ]);
+        });
+    }
+
 }

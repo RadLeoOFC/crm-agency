@@ -1,15 +1,20 @@
 @extends('adminlte::page')
 
-@section('title', 'Add New Pricelist')
+@section('title', 'Edit Price override')
 
 @section('content_header')
-    <h1>Add New Pricelist</h1>
+    <h1>Edit Price override</h1>
 @stop
 
 @section('content')
-    <form action="{{ route('pricelists.store') }}" method="POST">
+    <form action="{{ route('priceoverrides.update', [$pricelist, $override]) }}" method="POST">
         @csrf
-        @include('pricelists._form', ['submitButtonText' => 'Create Pricelist'])
+        @method('PUT')
+        @include('priceoverrides._form', [
+            'override' => $override,
+            'submitButtonText' => 'Update Price override'
+        ])
+
     </form>
 @stop
 

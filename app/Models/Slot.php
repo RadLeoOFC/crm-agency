@@ -12,8 +12,6 @@ class Slot extends Model
     protected $fillable = [
         'platform_id',
         'price_list_id',
-        'price_list_rule_id',
-        'price_override_id',
         'starts_at',
         'ends_at',
         'price',

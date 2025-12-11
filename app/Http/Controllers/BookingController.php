@@ -3,85 +3,91 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Booking; 
-use App\Models\Platform;
-use App\Models\Client;
+use Illuminate\Support\Facades\DB;
+use App\Models\{Booking, Platform, Client, Slot};
+use App\Services\PricingService;
 use Carbon\Carbon;
 
 class BookingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $bookings = Booking::all();
+        $bookings = Booking::with(['client','platform','slot'])->latest('id')->paginate(20);
         return view('bookings.index', compact('bookings'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('bookings.create', [
-            'booking' => new \App\Models\Booking(),
-            'clients' => \App\Models\Client::all(),
-            'platforms' => \App\Models\Platform::all(),
+            'booking'   => new Booking(),
+            'clients'   => Client::orderBy('name')->get(),
+            'platforms' => Platform::orderBy('name')->get(),
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request, PricingService $pricingService)
     {
         $request->validate([
-            'platform_id'=>'required|exists:platforms,id',
-            'client_id'=>'required|exists:clients,id',
-            'slot_id'=>'nullable|exists:slots,id',
-            'starts_at'=>'nullable|date',
-            'ends_at'=>'nullable|date|after:starts_at',
-            'promo_code'=>'nullable|string',
+            'platform_id' => 'required|exists:platforms,id',
+            'client_id'   => 'required|exists:clients,id',
+            'slot_id'     => 'nullable|exists:slots,id',
+            'starts_at'   => 'nullable|date',
+            'ends_at'     => 'nullable|date|after:starts_at',
+            'promo_code'  => 'nullable|string|max:64',
             'notes'       => 'nullable|string',
         ]);
 
         $platform = Platform::findOrFail($request->platform_id);
-        $client = Client::findOrFail($request->client_id);
+        $client   = Client::findOrFail($request->client_id);
 
-        // determine time window: either slot times or provided times
+        // определить интервал
+        $slot  = null;
+        $start = null;
+        $end   = null;
+
         if ($request->slot_id) {
-            $slot = Slot::lockForUpdate()->findOrFail($request->slot_id); // pessimistic lock
-            if (!$slot->isAvailable()) {
-                return back()->withErrors(['slot'=>'Slot no longer available']);
-            }
+            // блокировка слота внутри транзакции
+            $slot = Slot::findOrFail($request->slot_id);
             $start = $slot->starts_at;
             $end   = $slot->ends_at;
         } else {
-            $start = Carbon::parse($request->starts_at, $platform->priceLists()->first()->timezone);
-            $end   = Carbon::parse($request->ends_at, $platform->priceLists()->first()->timezone);
+            $pl = $platform->priceLists()->where('is_active', true)->first();
+            if (!$pl) {
+                return back()->withErrors(['platform_id'=>'Для площадки нет активного прайс-листа'])->withInput();
+            }
+            $tz    = $pl->timezone;
+            $start = Carbon::parse($request->starts_at, $tz);
+            $end   = Carbon::parse($request->ends_at, $tz);
         }
 
-        $pricing = app(\App\Services\PricingService::class)
-            ->quote($platform, $start, $end, $request->promo_code, $client->id);
+        $quote = $pricingService->quote($platform, $start, $end, $request->promo_code, $client->id);
 
-        DB::transaction(function() use($slot, $request, $client, $platform, $pricing) {
+        DB::transaction(function() use ($slot, $request, $client, $platform, $quote, $start, $end) {
+            if ($slot) {
+                // повторно загрузим слот с блокировкой
+                $slot = Slot::whereKey($slot->id)->lockForUpdate()->first();
+                if (!$slot->isAvailable()) {
+                    throw new \RuntimeException('Slot no longer available');
+                }
+            }
+
             $booking = Booking::create([
-                'platform_id' => $platform->id,
-                'client_id'   => $client->id,
-                'slot_id'     => $slot->id ?? null,
-                'starts_at'   => $start,
-                'ends_at'     => $end,
-                'price'       => $pricing['final_price'],
-                'list_price'  => $pricing['list_price'],
-                'discount_amount' => $pricing['discount'],
-                'currency'    => $pricing['currency'],
-                'promo_code_id'=> $pricing['promo_code_id'],
-                'status'      => 'pending',
+                'platform_id'     => $platform->id,
+                'client_id'       => $client->id,
+                'slot_id'         => $slot->id ?? null,
+                'starts_at'       => $start,
+                'ends_at'         => $end,
+                'status'          => 'pending',
+                'notes'           => $request->input('notes'),
+                // цены
+                'price'           => $quote['final_price'],
+                'list_price'      => $quote['list_price'],
+                'discount_amount' => $quote['discount'],
+                'currency'        => $quote['currency'],
+                'promo_code_id'   => $quote['promo_code_id'],
             ]);
 
-            if (isset($slot)) {
-                // update slot used_capacity atomically
+            if ($slot) {
                 $slot->used_capacity++;
                 if ($slot->used_capacity >= $slot->capacity) {
                     $slot->status = 'booked';
@@ -93,27 +99,16 @@ class BookingController extends Controller
         return redirect()->route('bookings.index')->with('success','Booking created');
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Booking $booking)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Booking $booking)
     {
-        return view('bookings.edit');
+        return view('bookings.edit', [
+            'booking'   => $booking->load(['client','platform','slot']),
+            'clients'   => Client::orderBy('name')->get(),
+            'platforms' => Platform::orderBy('name')->get(),
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Booking $booking)
+    public function update(Request $request, Booking $booking, PricingService $pricingService)
     {
         $request->validate([
             'platform_id' => 'required|exists:platforms,id',
@@ -121,41 +116,42 @@ class BookingController extends Controller
             'slot_id'     => 'nullable|exists:slots,id',
             'starts_at'   => 'nullable|date',
             'ends_at'     => 'nullable|date|after:starts_at',
-            'promo_code'  => 'nullable|string',
+            'promo_code'  => 'nullable|string|max:64',
             'status'      => 'required|in:pending,confirmed,cancelled,completed',
             'notes'       => 'nullable|string',
         ]);
 
-        // Запрещаем менять подтвержденные или завершённые брони (по бизнес-правилу)
-        if (in_array($booking->status, ['confirmed', 'completed'])) {
-            return back()->withErrors(['status' => 'Confirmed/completed bookings cannot be edited.']);
+        if (in_array($booking->status, ['confirmed','completed'])) {
+            return back()->withErrors(['status'=>'Confirmed/completed bookings cannot be edited.']);
         }
 
         $platform = Platform::findOrFail($request->platform_id);
-        $client = Client::findOrFail($request->client_id);
-        $oldSlot = $booking->slot; // текущий слот до изменений
-        $slot = null;
+        $client   = Client::findOrFail($request->client_id);
+        $oldSlot  = $booking->slot;
+        $slot     = null;
+        $start    = null;
+        $end      = null;
 
-        // определяем новые даты
         if ($request->slot_id) {
-            $slot = Slot::lockForUpdate()->findOrFail($request->slot_id);
-            if (!$slot->isAvailable() && $slot->id !== optional($oldSlot)->id) {
-                return back()->withErrors(['slot' => 'New slot is not available']);
-            }
+            $slot  = Slot::findOrFail($request->slot_id);
             $start = $slot->starts_at;
             $end   = $slot->ends_at;
         } else {
-            $start = Carbon::parse($request->starts_at, $platform->priceLists()->first()->timezone);
-            $end   = Carbon::parse($request->ends_at, $platform->priceLists()->first()->timezone);
+            $pl = $platform->priceLists()->where('is_active', true)->first();
+            if (!$pl) {
+                return back()->withErrors(['platform_id'=>'Для площадки нет активного прайс-листа'])->withInput();
+            }
+            $tz    = $pl->timezone;
+            $start = Carbon::parse($request->starts_at, $tz);
+            $end   = Carbon::parse($request->ends_at, $tz);
         }
 
-        // пересчитать цену
-        $pricing = app(\App\Services\PricingService::class)
-            ->quote($platform, $start, $end, $request->promo_code, $client->id);
+        $quote = $pricingService->quote($platform, $start, $end, $request->promo_code, $client->id);
 
-        DB::transaction(function() use ($booking, $slot, $oldSlot, $platform, $client, $pricing, $start, $end, $request) {
-            // 1️⃣ Освободить старый слот (если был и если изменился)
-            if ($oldSlot && (!$slot || $oldSlot->id !== $slot->id)) {
+        DB::transaction(function() use ($booking, $slot, $oldSlot, $platform, $client, $quote, $start, $end, $request) {
+
+            if ($oldSlot && (!$slot || $oldSlot->id !== optional($slot)->id)) {
+                $oldSlot = Slot::whereKey($oldSlot->id)->lockForUpdate()->first();
                 $oldSlot->used_capacity = max(0, $oldSlot->used_capacity - 1);
                 if ($oldSlot->used_capacity < $oldSlot->capacity) {
                     $oldSlot->status = 'available';
@@ -163,23 +159,28 @@ class BookingController extends Controller
                 $oldSlot->save();
             }
 
-            // 2️⃣ Обновить данные брони
+            if ($slot) {
+                $slot = Slot::whereKey($slot->id)->lockForUpdate()->first();
+                if (!$slot->isAvailable() && $slot->id !== optional($oldSlot)->id) {
+                    throw new \RuntimeException('New slot is not available');
+                }
+            }
+
             $booking->update([
                 'platform_id'     => $platform->id,
                 'client_id'       => $client->id,
                 'slot_id'         => $slot->id ?? null,
                 'starts_at'       => $start,
                 'ends_at'         => $end,
-                'list_price'      => $pricing['list_price'],
-                'discount_amount' => $pricing['discount'],
-                'price'           => $pricing['final_price'],
-                'currency'        => $pricing['currency'],
-                'promo_code_id'   => $pricing['promo_code_id'],
                 'status'          => $request->input('status', $booking->status),
                 'notes'           => $request->input('notes', $booking->notes),
+                'price'           => $quote['final_price'],
+                'list_price'      => $quote['list_price'],
+                'discount_amount' => $quote['discount'],
+                'currency'        => $quote['currency'],
+                'promo_code_id'   => $quote['promo_code_id'],
             ]);
 
-            // 3️⃣ Занять новый слот, если изменился
             if ($slot && (!$oldSlot || $slot->id !== $oldSlot->id)) {
                 $slot->used_capacity++;
                 if ($slot->used_capacity >= $slot->capacity) {
@@ -189,19 +190,12 @@ class BookingController extends Controller
             }
         });
 
-        return redirect()->route('bookings.show', $booking)->with('success', 'Booking updated successfully.');
+        return redirect()->route('bookings.index')->with('success','Booking updated successfully.');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Booking $booking)
     {
         $booking->delete();
-
-        return redirect()
-            ->route('bookings.index')
-            ->with('success', 'Client deleted successfully.');
+        return redirect()->route('bookings.index')->with('success','Booking deleted successfully.');
     }
 }
