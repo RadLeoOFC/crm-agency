@@ -326,86 +326,46 @@ return [
             'icon' => 'fas fa-fw fa-users',
         ],
         [
-            'text' => 'All Users',
-            'url'  => 'users',
-            'icon' => 'fas fa-fw fa-users',
+            'text' => 'User Management',
+            'icon' => 'fas fa-fw fa-user-cog',
+            'can'  => 'users.view',
+            'submenu' => [
+                [
+                    'text' => 'All Users',
+                    'url'  => 'users',
+                    'icon' => 'fas fa-fw fa-users',
+                ],
+                [
+                    'text' => 'Roles',
+                    'url'  => 'roles',
+                    'icon' => 'fas fa-fw fa-user-tag',
+                ],
+            ],
         ],
         [
             'text' => 'Platforms',
             'url'  => 'platforms',
-            'icon' => 'fas fa-fw fa-platforms',
+            'icon' => 'fas fa-fw fa-bullhorn',
         ],
         [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Bookings',
+            'url'  => 'bookings',
+            'icon' => 'fas fa-fw fa-calendar-check'
         ],
         [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Price lists',
+            'url'  => 'pricelists',
+            'icon' => 'fas fa-fw fa-tags'
         ],
         [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
+            'text' => 'Promocodes',
+            'url'  => 'promocodes',
+            'icon' => 'fas fa-fw fa-ticket-alt'
         ],
         [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
+            'text' => 'Slots',
+            'url'  => 'slots',
+            'icon' => 'fas fa-fw fa-clock'
         ],
     ],
 

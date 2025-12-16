@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         // сиды вызываем по очереди
         // we call the seeds one by one
         $this->call([
-            RolesSeeder::class,
+            RolesAndPermissionsSeeder::class,
             UsersSeeder::class,
             ClientsSeeder::class,
         ]);
