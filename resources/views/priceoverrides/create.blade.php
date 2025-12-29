@@ -3,13 +3,13 @@
 @section('title', 'Create Price override')
 
 @section('content_header')
-    <h1>Create Price override</h1>
+    <h1>{{ __('messages.priceoverrides.title_create') }}</h1>
 @stop
 
 @section('content')
     <form action="{{ route('priceoverrides.store', $pricelist) }}" method="POST">
         @csrf
-        @include('priceoverrides._form', ['submitButtonText' => 'Save'])
+        @include('priceoverrides._form', ['submitButtonText' => __('messages.save')])
     </form>
 @stop
 

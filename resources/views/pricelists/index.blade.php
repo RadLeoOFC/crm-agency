@@ -4,20 +4,20 @@
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h1>Прайс-листы</h1>
-  <a href="{{ route('pricelists.create') }}" class="btn btn-primary">Создать</a>
+  <h1>{{ __('messages.pricelists.title') }}</h1>
+  <a href="{{ route('pricelists.create') }}" class="btn btn-primary">{{ __('messages.create') }}</a>
 </div>
 <table class="table table-striped">
   <thead>
     <tr>
       <th>#</th>
-      <th>Площадка</th>
-      <th>Название</th>
-      <th>Валюта</th>
-      <th>Период</th>
-      <th>TZ</th>
-      <th>Активен</th>
-      <th class="text-end">Действия</th>
+      <th>{{ __('messages.pricelists.fields.platform') }}</th>
+      <th>{{ __('messages.pricelists.fields.name') }}</th>
+      <th>{{ __('messages.pricelists.fields.currency') }}</th>
+      <th>{{ __('messages.pricelists.fields.period') }}</th>
+      <th>{{ __('messages.pricelists.fields.timezone') }}</th>
+      <th>{{ __('messages.pricelists.fields.active') }}</th>
+      <th class="text-end">{{ __('messages.actions') }}</th>
     </tr>
   </thead>
   <tbody>
@@ -31,9 +31,10 @@
       <td>{{ $pricelist->timezone }}</td>
       <td>{{ $pricelist->is_active ? 'Да':'Нет' }}</td>
       <td class="text-end">
-        <form method="POST" action="{{ route('pricelists.destroy',$pricelist) }}" onsubmit="return confirm('Удалить?')">
+        <a href="{{ route('pricelists.show', $pricelist) }}" class="btn btn-sm btn-outline-primary">{{ __('messages.pricelists.view') }}</a>
+        <form method="POST" action="{{ route('pricelists.destroy',$pricelist) }}" onsubmit="return confirm('{{ __('messages.pricelists.confirm_delete') }}')">
           @csrf @method('DELETE')
-          <button class="btn btn-sm btn-outline-danger">Удалить</button>
+          <button class="btn btn-sm btn-outline-danger">{{ __('messages.delete') }}</button>
         </form>
       </td>
     </tr>

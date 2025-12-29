@@ -4,8 +4,8 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between">
-        <h1>Users</h1>
-        <a href="{{ route('users.create') }}" class="btn btn-primary">New User</a>
+        <h1>{{ __('messages.users.title') }}</h1>
+        <a href="{{ route('users.create') }}" class="btn btn-primary">{{ __('messages.users.add') }}</a>
     </div>
 @stop
 
@@ -21,9 +21,10 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Telegram ID</th>
+                        <th>{{ __('messages.users.fields.name') }}</th>
+                        <th>{{ __('messages.users.fields.email') }}</th>
+                        <th>{{ __('messages.users.fields.telegram_chat_id') }}</th>
+                        <th>{{ __('messages.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,7 +42,7 @@
                                     <form action="{{ route('users.destroy', $user) }}" 
                                           method="POST" 
                                           class="d-inline"
-                                          onsubmit="return confirm('Are you sure you want to delete this user?')">
+                                          onsubmit="return confirm('{{ __('messages.users.delete_confirm') }}')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">

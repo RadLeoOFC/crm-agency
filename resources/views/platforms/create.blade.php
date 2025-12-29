@@ -1,37 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Platform</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
+@extends('adminlte::page')
 
+@section('title', 'Create Platform')
+
+@section('content')
 <div class="container mt-4">
     <div class="card shadow-sm">
         <div class="card-header">
-            <h2 class="mb-0">Create Platform</h2>
+            <h2 class="mb-0">{{ __('messages.platforms.create') }}</h2>
         </div>
         <div class="card-body">
-            <a href="{{ route('platforms.index') }}" class="btn btn-secondary mb-3">Back to List</a>
+            <a href="{{ route('platforms.index') }}" class="btn btn-secondary mb-3">{{ __('messages.platforms.back') }}</a>
 
             <form action="{{ route('platforms.store') }}" method="POST">
                 @csrf
 
                 <div class="mb-3">
-                    <label for="name" class="form-label">Name of flatform</label>
+                    <label for="name" class="form-label">{{ __('messages.platforms.fields.name') }}</label>
                     <input type="text" name="name" id="start_date" class="form-control" value="{{ old('name') }}">
                 </div>
 
                 <div class="mb-3">
-                    <label for="type" class="form-label">Platform Type</label>
+                    <label for="type" class="form-label">{{ __('messages.platforms.fields.type') }}</label>
                     <select name="type" id="type" class="form-select">
-                        <option value="telegram" {{ old('type') == 'telegram' ? 'selected' : '' }}>Telegram</option>
-                        <option value="youtube" {{ old('type') == 'youtube' ? 'selected' : '' }}>Youtube</option>
-                        <option value="facebook" {{ old('type') == 'facebook' ? 'selected' : '' }}>Facebook</option>
-                        <option value="website" {{ old('type') == 'website' ? 'selected' : '' }}>Website</option>
+                        <option value="telegram" {{ old('type') == 'telegram' ? 'selected' : '' }}>{{ __('messages.platforms.types.telegram') }}</option>
+                        <option value="youtube" {{ old('type') == 'youtube' ? 'selected' : '' }}>{{ __('messages.platforms.types.youtube') }}</option>
+                        <option value="facebook" {{ old('type') == 'facebook' ? 'selected' : '' }}>{{ __('messages.platforms.types.facebook') }}</option>
+                        <option value="website" {{ old('type') == 'website' ? 'selected' : '' }}>{{ __('messages.platforms.types.website') }}</option>
                     </select>
                     @if ($errors->has('type'))
                         <div class="alert alert-danger mt-2">
@@ -41,12 +35,12 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
+                    <label for="description" class="form-label">{{ __('messages.platforms.fields.description') }}</label>
                     <input type="text" name="description" id="description" class="form-control" value="{{ old('description') }}">
                 </div>
 
                 <div class="mb-3">
-                    <label for="currency" class="form-label">Currency</label>
+                    <label for="currency" class="form-label">{{ __('messages.platforms.fields.currency') }}</label>
                         <select name="currency" id="currency" class="form-control @error('currency') is-invalid @enderror" required>
                         @foreach(\App\Models\Platform::$currencies as $code => $name)
                             <option value="{{ $code }}" {{ old('currency', $platform->currency ?? '') == $code ? 'selected' : '' }}>
@@ -57,7 +51,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="timezone" class="form-label">Timezone</label>
+                    <label for="timezone" class="form-label">{{ __('messages.platforms.fields.timezone') }}</label>
                     <select name="timezone" id="timezone" class="form-select">
                         @foreach($timezones as $tz)
                             <option value="{{ $tz }}" @selected(old('timezone') === $tz)>
@@ -83,13 +77,10 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-success">Create platform</button>
+                <button type="submit" class="btn btn-success">{{ __('messages.platforms.create') }}</button>
             </form>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>
+@stop

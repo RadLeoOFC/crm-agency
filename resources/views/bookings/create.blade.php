@@ -1,11 +1,18 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Create Bookings')
+
+@section('content_header')
+    <h1>{{ __('messages.bookings.title_create') }}</h1>
+@stop
 
 @section('content')
-<div class="container">
-    <h1>Новое бронирование</h1>
-
     <form action="{{ route('bookings.store') }}" method="POST">
-        @include('bookings._form', ['booking' => new \App\Models\Booking()])
+        @csrf
+        @include('bookings._form', ['submitButtonText' => __('messages.bookings.create_button')])
     </form>
-</div>
-@endsection
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop

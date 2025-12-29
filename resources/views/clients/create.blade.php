@@ -3,14 +3,13 @@
 @section('title', 'Add New Client')
 
 @section('content_header')
-    <h1>Add New Client</h1>
+    <h1>{{ __('messages.clients.title_create') }}</h1>
 @stop
 
 @section('content')
     <form action="{{ route('clients.store') }}" method="POST">
         @csrf
-        @include('clients._form', ['submitButtonText' => 'Create Client'])
-        <button type="submit" class="btn btn-success">Create client</button>
+        @include('clients._form', ['submitButtonText' => __('messages.clients.create_button')])
     </form>
 @stop
 

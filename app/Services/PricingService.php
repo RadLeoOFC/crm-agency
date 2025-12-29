@@ -5,13 +5,9 @@ use Carbon\Carbon;
 
 class PricingService
 {
-    public function quote(Platform $platform, Carbon $startAt, Carbon $endAt, ?string $promoCode, ?int $clientId): array
+    public function quote( PriceList $priceList, Carbon $startAt, Carbon $endAt, ?string $promoCode, ?int $clientId): array
     {
-        $pl = PriceList::where('platform_id', $platform->id)
-            ->where('is_active', true)
-            ->where(function($q) use ($startAt) { $q->whereNull('valid_from')->orWhere('valid_from', '<=', $startAt->toDateString()); })
-            ->where(function($q) use ($startAt) { $q->whereNull('valid_to')->orWhere('valid_to', '>=', $startAt->toDateString()); })
-            ->firstOrFail();
+        $pl = $priceList;
 
         $override = PriceOverride::where('price_list_id', $pl->id)
             ->whereDate('for_date', $startAt->toDateString())
@@ -44,8 +40,8 @@ class PricingService
 
         $used = Booking::query()
             ->whereIn('status', ['pending','confirmed'])
-            ->whereHas('slot', function($q) use ($platform, $bandStartDT, $bandEndDT) {
-                $q->where('platform_id', $platform->id)
+            ->whereHas('slot', function($q) use ($pl, $bandStartDT, $bandEndDT) {
+                $q->where('platform_id', $pl->platform_id)
                   ->whereBetween('starts_at', [$bandStartDT, $bandEndDT]);
             })->count();
 
@@ -55,7 +51,7 @@ class PricingService
 
         $discount = 0.0; $appliedPromoId = null;
         if ($promoCode) {
-            $promo = $this->validatePromo($promoCode, $platform->id, $pl->id, $listPrice, $clientId);
+            $promo = $this->validatePromo($promoCode, $pl->platform_id, $pl->id, $listPrice, $clientId);
             if ($promo) {
                 $discount = $promo->discount_type === 'percent'
                     ? round($listPrice * ((float)$promo->discount_value / 100), 2)

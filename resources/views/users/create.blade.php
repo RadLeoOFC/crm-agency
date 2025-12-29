@@ -3,7 +3,7 @@
 @section('title', 'New User')
 
 @section('content_header')
-    <h1>New User</h1>
+    <h1>{{ __('messages.users.add') }}</h1>
 @stop
 
 @section('content')
@@ -13,8 +13,8 @@
                 @include('users._form')
 
                 <div class="mt-4">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">{{ __('messages.save') }}</button>
+                    <a href="{{ route('users.index') }}" class="btn btn-secondary">{{ __('messages.cancel') }}</a>
                 </div>
             </form>
         </div>

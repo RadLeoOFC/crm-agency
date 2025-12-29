@@ -1,17 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit New Client')
+@section('title', 'Edit Client')
 
 @section('content_header')
-    <h1>Edit New Client</h1>
+    <h1>{{__('messages.clients.title_edit')}}</h1>
 @stop
 
 @section('content')
     <form action="{{ route('clients.update', $client) }}" method="POST">
         @csrf
         @method('PUT')
-        @include('clients._form', ['submitButtonText' => 'Update Client'])
-        <button type="submit" class="btn btn-success">Update client</button>
+        @include('clients._form', ['submitButtonText' => __('messages.clients.update_button')])
     </form>
 @stop
 

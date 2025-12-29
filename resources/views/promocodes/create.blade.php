@@ -3,13 +3,13 @@
 @section('title', 'Create Promocode')
 
 @section('content_header')
-    <h1>Create Promocode</h1>
+    <h1>{{ __('messages.promocodes.title_create') }}</h1>
 @stop
 
 @section('content')
     <form action="{{ route('promocodes.store') }}" method="POST">
         @csrf
-        @include('promocodes._form', ['submitButtonText' => 'Create promocode'])
+        @include('promocodes._form', ['submitButtonText' => __('messages.promocodes.create_button')])
     </form>
 @stop
 

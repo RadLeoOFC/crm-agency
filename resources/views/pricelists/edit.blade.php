@@ -3,14 +3,14 @@
 @section('title', 'Edit Pricelist')
 
 @section('content_header')
-    <h1>Edit Pricelist</h1>
+    <h1>{{ __('messages.pricelists.title_edit') }}</h1>
 @stop
 
 @section('content')
     <form action="{{ route('pricelists.update', $pricelist) }}" method="POST">
         @csrf
         @method('PUT')
-        @include('pricelists._form', ['submitButtonText' => 'Update Pricelist'])
+        @include('pricelists._form', ['submitButtonText' => __('messages.pricelists.update_button')])
     </form>
 @stop
 

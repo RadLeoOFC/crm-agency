@@ -4,8 +4,8 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between">
-        <h1>Platforms</h1>
-        <a href="{{ route('platforms.create') }}" class="btn btn-primary">Add New Platform</a>
+        <h1>{{ __('messages.platforms.title') }}</h1>
+        <a href="{{ route('platforms.create') }}" class="btn btn-primary">{{ __('messages.platforms.add') }}</a>
     </div>
 @stop
 
@@ -15,13 +15,13 @@
             <table id="platforms-table" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Platform type</th>
-                        <th>Description</th>
-                        <th>Currency</th>
-                        <th>Timezone</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>{{ __('messages.platforms.fields.name') }}</th>
+                        <th>{{ __('messages.platforms.fields.type') }}</th>
+                        <th>{{ __('messages.platforms.fields.description') }}</th>
+                        <th>{{ __('messages.platforms.fields.currency') }}</th>
+                        <th>{{ __('messages.platforms.fields.timezone') }}</th>
+                        <th>{{ __('messages.platforms.fields.status') }}</th>
+                        <th>{{ __('messages.platforms.actions.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,9 +34,9 @@
                             <td>{{ $platform->timezone }}</td>
                             <td>
                                 @if($platform->is_active)
-                                    <span class="badge badge-success">Active</span>
+                                    <span class="badge badge-success">{{ __('messages.platforms.fields.active') }}</span>
                                 @else
-                                    <span class="badge badge-danger">Inactive</span>
+                                    <span class="badge badge-danger">{{ __('messages.platforms.fields.inactive') }}</span>
                                 @endif
                             </td>
                             <td>
@@ -47,7 +47,7 @@
                                     <form action="{{ route('platforms.destroy', $platform) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this platform?')">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ __('messages.platforms.actions.confirm_delete') }}')">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>

@@ -1,7 +1,7 @@
 @csrf
 
 <div class="form-group">
-    <label for="name">Name</label>
+    <label for="name">{{ __('messages.users.fields.name') }}</label>
     <input type="text" 
            class="form-control @error('name') is-invalid @enderror" 
            id="name" 
@@ -14,7 +14,7 @@
 </div>
 
 <div class="form-group">
-    <label for="email">Email</label>
+    <label for="email">{{ __('messages.users.fields.email') }}</label>
     <input type="email" 
            class="form-control @error('email') is-invalid @enderror" 
            id="email" 
@@ -27,7 +27,7 @@
 </div>
 
 <div class="form-group">
-    <label for="telegram_chat_id">Telegram Chat ID</label>
+    <label for="telegram_chat_id">{{ __('messages.users.fields.telegram_chat_id') }}</label>
     <input type="text" 
            class="form-control @error('telegram_chat_id') is-invalid @enderror" 
            id="telegram_chat_id" 
@@ -40,7 +40,7 @@
 
 
 <div class="form-group">
-    <label for="password">Password {{ isset($user) ? "(Leave blank if you don't want to change)" : '' }}</label>
+    <label for="password">{{ __('messages.users.fields.password') }} {{ isset($user) ? "(Leave blank if you don't want to change)" : '' }}</label>
     <input type="password" 
            class="form-control @error('password') is-invalid @enderror" 
            id="password" 
@@ -52,7 +52,7 @@
 </div>
 
 <div class="form-group">
-    <label for="roles">Roles</label>
+    <label for="roles">{{ __('messages.users.fields.roles') }}</label>
     <select class="form-control @error('roles') is-invalid @enderror" 
             id="roles" 
             name="roles[]" 

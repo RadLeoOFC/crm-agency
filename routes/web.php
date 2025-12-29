@@ -11,6 +11,9 @@ use App\Http\Controllers\PriceListRuleController;
 use App\Http\Controllers\PriceOverrideController;
 use App\Http\Controllers\PromocodeController;
 use App\Http\Controllers\SlotController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\LanguageSwitchController;
+use App\Models\Language;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -57,6 +60,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     Route::middleware('permission:slots.create')->group(function () {
         Route::get('slots/create', [SlotController::class, 'create'])->name('slots.create');
+    });
+    Route::middleware('permission:languages.create')->group(function () {
+        Route::get('languages/create', [LanguageController::class, 'create'])->name('languages.create');
     });
 
 
@@ -270,6 +276,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('slots/{slot}', [SlotController::class, 'destroy'])
         ->middleware('permission:slots.delete')
         ->name('slots.destroy');
+
+    // Languages management
+    Route::middleware('permission:languages.view')->group(function () {
+        Route::get('languages', [LanguageController::class, 'index'])->name('languages.index');
+        Route::get('languages/{language}', [LanguageController::class, 'show'])->name('languages.show');
+    });
+
+    Route::middleware('permission:languages.create')->group(function () {
+        Route::get('languages/create', [LanguageController::class, 'create'])->name('languages.create');
+        Route::post('languages', [LanguageController::class, 'store'])->name('languages.store');
+    });
+
+    Route::middleware('permission:languages.edit')->group(function () {
+        Route::get('languages/{language}/edit', [LanguageController::class, 'edit'])->name('languages.edit');
+        Route::put('languages/{language}', [LanguageController::class, 'update'])->name('languages.update');
+    });
+
+    Route::delete('languages/{language}', [LanguageController::class, 'destroy'])
+        ->middleware('permission:languages.delete')
+        ->name('languages.destroy');
+
+    Route::get('switch-language/{code}', [LanguageSwitchController::class, 'switch'])
+    ->name('language.switch');
+
 
 });
 

@@ -3,7 +3,7 @@
 @section('title', 'Edit Price override')
 
 @section('content_header')
-    <h1>Edit Price override</h1>
+    <h1>{{ __('messages.priceoverrides.title_edit') }}</h1>
 @stop
 
 @section('content')
@@ -12,7 +12,7 @@
         @method('PUT')
         @include('priceoverrides._form', [
             'override' => $override,
-            'submitButtonText' => 'Update Price override'
+            'submitButtonText' => __('messages.priceoverrides.update_button')
         ])
 
     </form>

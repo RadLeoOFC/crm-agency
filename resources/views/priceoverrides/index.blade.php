@@ -3,18 +3,18 @@
 @section('title', 'Price Overrides')
 
 @section('content')
-<h1>Исключения — {{ $pricelist->name }}</h1>
-<a href="{{ route('priceoverrides.create',$pricelist) }}" class="btn btn-primary mb-3">Добавить исключение</a>
+<h1>{{ __('messages.priceoverrides.title') }} — {{ $pricelist->name }}</h1>
+<a href="{{ route('priceoverrides.create',$pricelist) }}" class="btn btn-primary mb-3">{{ __('messages.priceoverrides.add') }}</a>
 <table class="table table-striped">
   <thead>
     <tr>
-        <th>Дата</th>
-        <th>С</th>
-        <th>По</th>
-        <th>Цена</th>
-        <th>Ёмкость</th>
-        <th>Активно</th>
-        <th class="text-end">Действия</th>
+        <th>{{ __('messages.priceoverrides.fields.date') }}</th>
+        <th>{{ __('messages.priceoverrides.fields.starts_at') }}</th>
+        <th>{{ __('messages.priceoverrides.fields.ends_at') }}</th>
+        <th>{{ __('messages.priceoverrides.fields.slot_price') }}</th>
+        <th>{{ __('messages.priceoverrides.fields.capacity') }}</th>
+        <th>{{ __('messages.priceoverrides.fields.is_active') }}</th>
+        <th class="text-end">{{ __('messages.actions') }}</th>
     </tr>
   </thead>
   <tbody>
@@ -27,15 +27,15 @@
       <td>{{ $override->capacity ?? '—' }}</td>
       <td>{{ $override->is_active ? 'Да':'Нет' }}</td>
       <td class="text-end">
-        <a class="btn btn-sm btn-outline-primary" href="{{ route('priceoverrides.edit', [$pricelist, $override]) }}">Редакт.</a>
-        <form class="d-inline" method="POST" action="{{ route('priceoverrides.destroy', [$pricelist, $override]) }}" onsubmit="return confirm('Удалить?')">
+        <a class="btn btn-sm btn-outline-primary" href="{{ route('priceoverrides.edit', [$pricelist, $override]) }}">{{ __('messages.priceoverrides.edit') }}</a>
+        <form class="d-inline" method="POST" action="{{ route('priceoverrides.destroy', [$pricelist, $override]) }}" onsubmit="return confirm('{{ __('messages.priceoverrides.confirm_delete') }}')">
           @csrf @method('DELETE')
-          <button class="btn btn-sm btn-outline-danger">Удалить</button>
+          <button class="btn btn-sm btn-outline-danger">{{ __('messages.delete') }}</button>
         </form>
       </td>
     </tr>
     @endforeach
   </tbody>
 </table>
-<a class="btn btn-link" href="{{ route('pricelists.edit',$pricelist) }}">Назад к прайс-листу</a>
+<a class="btn btn-link" href="{{ route('pricelists.edit',$pricelist) }}">{{ __('messages.priceoverrides.back') }}</a>
 @endsection

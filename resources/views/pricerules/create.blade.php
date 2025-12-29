@@ -3,13 +3,13 @@
 @section('title', 'Create Rule')
 
 @section('content_header')
-    <h1>Create PriceRule</h1>
+    <h1>{{ __('messages.pricerules.title_create') }}</h1>
 @stop
 
 @section('content')
     <form action="{{ route('pricerules.store', $pricelist) }}" method="POST">
         @csrf
-        @include('pricerules._form', ['submitButtonText' => 'Save'])
+        @include('pricerules._form', ['submitButtonText' => __('messages.save')])
     </form>
 @stop
 

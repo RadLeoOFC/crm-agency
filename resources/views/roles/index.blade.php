@@ -5,12 +5,12 @@
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1>Roles</h1>
+            <h1>{{ __('messages.roles.title') }}</h1>
         </div>
         <div class="col-sm-6">
             @can('roles.create')
             <a href="{{ route('roles.create') }}" class="btn btn-primary float-right">
-                <i class="fas fa-plus"></i> Add New Role
+                <i class="fas fa-plus"></i> {{ __('messages.roles.add') }}
             </a>
             @endcan
         </div>
@@ -20,15 +20,15 @@
 @section('content')
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Roles List</h3>
+                    <h3 class="card-title">{{ __('messages.roles.list') }}</h3>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>Role Name</th>
-                        <th>Permissions</th>
-                        <th>Actions</th>
+                        <th>{{ __('messages.roles.fields.name') }}</th>
+                        <th>{{ __('messages.roles.fields.permissions') }}</th>
+                        <th>{{ __('messages.roles.fields.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,15 +43,15 @@
                         <td>
                             @can('roles.edit')
                             <a href="{{ route('roles.edit', $role) }}" class="btn btn-xs btn-info">
-                                <i class="fas fa-edit"></i> Edit
+                                <i class="fas fa-edit"></i> {{ __('messages.roles.edit') }}
                             </a>
                             @endcan
                             @can('roles.delete')
                             <form action="{{ route('roles.destroy', $role) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete this role?')">
-                                    <i class="fas fa-trash"></i> Delete
+                                <button type="submit" class="btn btn-xs btn-danger" onclick="return confirm('{{ __('messages.roles.confirm_delete') }}')">
+                                    <i class="fas fa-trash"></i> {{ __('messages.roles.delete') }}
                                 </button>
                             </form>
                             @endcan

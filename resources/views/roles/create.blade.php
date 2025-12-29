@@ -5,11 +5,11 @@
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1>Add New Role</h1>
+            <h1>{{ __('messages.roles.title_create') }}</h1>
         </div>
         <div class="col-sm-6">
             <a href="{{ route('roles.index') }}" class="btn btn-secondary float-right">
-                <i class="fas fa-arrow-left"></i> Go Back
+                <i class="fas fa-arrow-left"></i> {{ __('messages.roles.back') }}
             </a>
         </div>
     </div>
@@ -18,14 +18,14 @@
 @section('content')
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Create New Role</h3>
+                    <h3 class="card-title">{{ __('messages.roles.under_title_create') }}</h3>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('roles.store') }}" method="POST">
                 @csrf
                 
                         <div class="form-group">
-                            <label for="name">Role Name</label>
+                            <label for="name">{{ __('messages.roles.fields.name') }}</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" 
                                 id="name" name="name" value="{{ old('name') }}" required>
                     @error('name')
@@ -34,7 +34,7 @@
                 </div>
 
                         <div class="form-group">
-                            <label>Permissions</label>
+                            <label>{{ __('messages.roles.fields.permissions') }}</label>
                             <div class="row">
                         @foreach($permissions as $permission)
                         <div class="col-md-3 mb-2">
@@ -57,7 +57,7 @@
 
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Save
+                                <i class="fas fa-save"></i> {{ __('messages.save') }}
                             </button>
                         </div>
                     </form>

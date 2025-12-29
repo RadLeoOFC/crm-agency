@@ -27,77 +27,124 @@ class BookingController extends Controller
 
     public function store(Request $request, PricingService $pricingService)
     {
-        $request->validate([
-            'platform_id' => 'required|exists:platforms,id',
-            'client_id'   => 'required|exists:clients,id',
-            'slot_id'     => 'nullable|exists:slots,id',
-            'starts_at'   => 'nullable|date',
-            'ends_at'     => 'nullable|date|after:starts_at',
-            'promo_code'  => 'nullable|string|max:64',
-            'notes'       => 'nullable|string',
+        $validated = $request->validate([
+            'platform_id' => ['required','exists:platforms,id'],
+            'client_id'   => ['required','exists:clients,id'],
+            'slot_id'     => ['nullable','exists:slots,id'],
+            'starts_at'   => ['nullable','date'],
+            'ends_at'     => ['nullable','date','after:starts_at'],
+            'promo_code'  => ['nullable','string','max:64'],
+            'notes'       => ['nullable','string'],
+            'status'      => ['nullable','in:pending,confirmed,cancelled,completed'],
         ]);
 
-        $platform = Platform::findOrFail($request->platform_id);
-        $client   = Client::findOrFail($request->client_id);
+        try {
+            return DB::transaction(function () use ($validated, $pricingService) {
 
-        // определить интервал
-        $slot  = null;
-        $start = null;
-        $end   = null;
+                $platform = Platform::findOrFail($validated['platform_id']);
+                $client   = Client::findOrFail($validated['client_id']);
 
-        if ($request->slot_id) {
-            // блокировка слота внутри транзакции
-            $slot = Slot::findOrFail($request->slot_id);
-            $start = $slot->starts_at;
-            $end   = $slot->ends_at;
-        } else {
-            $pl = $platform->priceLists()->where('is_active', true)->first();
-            if (!$pl) {
-                return back()->withErrors(['platform_id'=>'Для площадки нет активного прайс-листа'])->withInput();
-            }
-            $tz    = $pl->timezone;
-            $start = Carbon::parse($request->starts_at, $tz);
-            $end   = Carbon::parse($request->ends_at, $tz);
+                // 🔹 активный прайс-лист
+                $priceList = $platform->priceLists()
+                    ->where('is_active', true)
+                    ->first();
+
+                if (!$priceList) {
+                    throw new \RuntimeException('Для площадки нет активного прайс-листа');
+                }
+
+                $slot  = null;
+                $start = null;
+                $end   = null;
+
+                // 🔹 если выбран слот — блокируем его
+                if (!empty($validated['slot_id'])) {
+
+                    $slot = Slot::whereKey($validated['slot_id'])
+                        ->lockForUpdate()
+                        ->firstOrFail();
+
+                    if (!$slot->isAvailable()) {
+                        throw new \RuntimeException('Выбранный слот больше недоступен');
+                    }
+
+                    $start = $slot->starts_at;
+                    $end   = $slot->ends_at;
+
+                } else {
+                    // 🔹 бронирование по времени
+                    if (empty($validated['starts_at']) || empty($validated['ends_at'])) {
+                        throw new \RuntimeException('Необходимо указать время начала и окончания');
+                    }
+
+                    $tz    = $priceList->timezone;
+                    $start = Carbon::parse($validated['starts_at'], $tz);
+                    $end   = Carbon::parse($validated['ends_at'], $tz);
+                }
+
+                // 🔹 расчёт цены (ВСЕГДА через PriceList)
+                $quote = $pricingService->quote(
+                    $priceList,
+                    $start,
+                    $end,
+                    $validated['promo_code'] ?? null,
+                    $client->id
+                );
+
+                // 🔹 создаём бронирование
+                $booking = Booking::create([
+                    'platform_id'     => $platform->id,
+                    'client_id'       => $client->id,
+                    'slot_id'         => $slot?->id,
+                    'starts_at'       => $start,
+                    'ends_at'         => $end,
+                    'status'          => $validated['status'] ?? 'pending',
+                    'notes'           => $validated['notes'] ?? null,
+
+                    'price'           => $quote['final_price'],
+                    'list_price'      => $quote['list_price'],
+                    'discount_amount' => $quote['discount'],
+                    'currency'        => $quote['currency'],
+                    'promo_code_id'   => $quote['promo_code_id'],
+                ]);
+
+                // 🔹 обновляем слот
+                if ($slot) {
+                    $slot->increment('used_capacity');
+
+                    if ($slot->used_capacity >= $slot->capacity) {
+                        $slot->status = 'booked';
+                        $slot->save();
+                    }
+                }
+
+                return redirect()
+                    ->route('bookings.index')
+                    ->with('success', 'Booking created successfully');
+            });
+
+        } catch (\Throwable $e) {
+
+            report($e);
+
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'booking' => $e->getMessage()
+                ]);
         }
-
-        $quote = $pricingService->quote($platform, $start, $end, $request->promo_code, $client->id);
-
-        DB::transaction(function() use ($slot, $request, $client, $platform, $quote, $start, $end) {
-            if ($slot) {
-                // повторно загрузим слот с блокировкой
-                $slot = Slot::whereKey($slot->id)->lockForUpdate()->first();
-                if (!$slot->isAvailable()) {
-                    throw new \RuntimeException('Slot no longer available');
-                }
-            }
-
-            $booking = Booking::create([
-                'platform_id'     => $platform->id,
-                'client_id'       => $client->id,
-                'slot_id'         => $slot->id ?? null,
-                'starts_at'       => $start,
-                'ends_at'         => $end,
-                'status'          => 'pending',
-                'notes'           => $request->input('notes'),
-                // цены
-                'price'           => $quote['final_price'],
-                'list_price'      => $quote['list_price'],
-                'discount_amount' => $quote['discount'],
-                'currency'        => $quote['currency'],
-                'promo_code_id'   => $quote['promo_code_id'],
-            ]);
-
-            if ($slot) {
-                $slot->used_capacity++;
-                if ($slot->used_capacity >= $slot->capacity) {
-                    $slot->status = 'booked';
-                }
-                $slot->save();
-            }
-        });
-
-        return redirect()->route('bookings.index')->with('success','Booking created');
     }
+
+    public function show(Booking $booking)
+    {
+        $booking->load(['client','platform','slot']);
+        $bookings = Booking::with('platform')
+            ->latest('id')
+            ->paginate(15)
+            ->withQueryString();
+        return view('bookings.show', compact('booking', 'bookings'));
+    }
+
 
     public function edit(Booking $booking)
     {
@@ -137,16 +184,21 @@ class BookingController extends Controller
             $start = $slot->starts_at;
             $end   = $slot->ends_at;
         } else {
-            $pl = $platform->priceLists()->where('is_active', true)->first();
-            if (!$pl) {
-                return back()->withErrors(['platform_id'=>'Для площадки нет активного прайс-листа'])->withInput();
+            $platform  = Platform::findOrFail($request->platform_id);
+            $client    = Client::findOrFail($request->client_id);
+            $priceList = $platform->priceLists()->where('is_active', true)->first();
+
+            if (!$priceList) {
+                return back()
+                    ->withErrors(['platform_id' => 'Для площадки нет активного прайс-листа'])
+                    ->withInput();
             }
-            $tz    = $pl->timezone;
+            $tz    = $priceList->timezone;
             $start = Carbon::parse($request->starts_at, $tz);
             $end   = Carbon::parse($request->ends_at, $tz);
         }
 
-        $quote = $pricingService->quote($platform, $start, $end, $request->promo_code, $client->id);
+        $quote = $pricingService->quote($priceList, $start, $end, $request->promo_code, $client->id);
 
         DB::transaction(function() use ($booking, $slot, $oldSlot, $platform, $client, $quote, $start, $end, $request) {
 

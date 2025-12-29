@@ -4,8 +4,8 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between">
-        <h1>Clients</h1>
-        <a href="{{ route('clients.create') }}" class="btn btn-primary">Add New Client</a>
+        <h1>{{ __('messages.clients.title') }}</h1>
+        <a href="{{ route('clients.create') }}" class="btn btn-primary">{{ __('messages.clients.add') }}</a>
     </div>
 @stop
 
@@ -15,15 +15,16 @@
             <table id="clients-table" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Contact person</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Company</th>
-                        <th>Vat number</th>
-                        <th>Country</th>
-                        <th>City/Town/Village</th>
-                        <th>Active</th>
+                        <th>{{ __('messages.clients.fields.name') }}</th>
+                        <th>{{ __('messages.clients.fields.contact_person') }}</th>
+                        <th>{{ __('messages.clients.fields.email') }}</th>
+                        <th>{{ __('messages.clients.fields.phone') }}</th>
+                        <th>{{ __('messages.clients.fields.company') }}</th>
+                        <th>{{ __('messages.clients.fields.vat') }}</th>
+                        <th>{{ __('messages.clients.fields.country') }}</th>
+                        <th>{{ __('messages.clients.fields.city') }}</th>
+                        <th>{{ __('messages.clients.fields.active') }}</th>
+                        <th>{{ __('messages.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,7 +38,6 @@
                             <td>{{ $client->vat_number }}</td>
                             <td>{{ $client->country}}</td>
                             <td>{{ $client->city}}</td>
-                            <td>{{ $client->is_active}}</td>
                             <td>
                                 @if($client->is_active)
                                     <span class="badge badge-success">Active</span>
@@ -53,7 +53,7 @@
                                     <form action="{{ route('clients.destroy', $client) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this client?')">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ __('messages.clients.delete_confirm') }}')">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>

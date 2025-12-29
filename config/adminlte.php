@@ -300,6 +300,28 @@ return [
 
     'menu' => [
         // Navbar items:
+        // Source - https://stackoverflow.com/a
+        // Posted by jgarcias
+        // Retrieved 2025-12-18, License - CC BY-SA 4.0
+
+        [
+            'text' => 'Language',
+            'topnav_right' => true,
+            'icon' => 'fas fa-fw fa-flag-usa',
+            'submenu' => [
+                [
+                    'text'=>'English',
+                    'icon' => 'fas fa-fw fa-flag-usa',
+                    'url'=> 'switch-language/en'
+                ],
+                [
+                    'text'=>'Russian',
+                    'icon' => 'fas fa-fw fa-flag-ru',
+                    'url'=> 'switch-language/ru'
+                ]
+            ]
+        ],
+
         [
             'type' => 'navbar-search',
             'text' => 'search',
@@ -366,6 +388,11 @@ return [
             'text' => 'Slots',
             'url'  => 'slots',
             'icon' => 'fas fa-fw fa-clock'
+        ],
+        [
+            'text' => 'Languages',
+            'url'  => 'languages',
+            'icon' => 'fas fa-regular fa-font'
         ],
     ],
 

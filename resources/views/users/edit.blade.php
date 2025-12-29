@@ -3,7 +3,7 @@
 @section('title', 'Edit User')
 
 @section('content_header')
-    <h1>Edit User: {{ $user->name }}</h1>
+    <h1>{{ __('messages.users.title_edit') }}: {{ $user->name }}</h1>
 @stop
 
 @section('content')
@@ -14,8 +14,8 @@
                 @include('users._form')
 
                 <div class="mt-4">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">{{ __('messages.users.update_button') }}</button>
+                    <a href="{{ route('users.index') }}" class="btn btn-secondary">{{ __('messages.cancel') }}</a>
                 </div>
             </form>
         </div>

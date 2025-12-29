@@ -1,12 +1,19 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Edit Bookings')
+
+@section('content_header')
+    <h1>{{ __('messages.bookings.title_edit') }}</h1>
+@stop
 
 @section('content')
-<div class="container">
-    <h1>Редактировать бронирование #{{ $booking->id }}</h1>
-
     <form action="{{ route('bookings.update', $booking) }}" method="POST">
+        @csrf
         @method('PUT')
-        @include('bookings._form')
+        @include('bookings._form', ['submitButtonText' => __('messages.bookings.update_button')])
     </form>
-</div>
-@endsection
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop

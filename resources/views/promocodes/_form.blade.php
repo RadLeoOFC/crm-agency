@@ -1,22 +1,22 @@
 <div class="card">
     <div class="row">
         <div class="col-md-4 mb-3">
-            <label class="form-label">Код</label>
+            <label class="form-label">{{ __('messages.promocodes.fields.code') }}</label>
             <input name="code" class="form-control" maxlength="64"
                    value="{{ old('code', $promo->code ?? '') }}" required>
         </div>
 
         <div class="col-md-4 mb-3">
-            <label class="form-label">Тип скидки</label>
+            <label class="form-label">{{ __('messages.promocodes.fields.type') }}</label>
             <select name="discount_type" id="discount_type" class="form-select" required>
-                @foreach(['percent'=>'Процент','fixed'=>'Фикс. сумма'] as $discount_type => $label)
+                @foreach(['percent'=>__('messages.promocodes.types.percent'),'fixed'=>__('messages.promocodes.types.fixed')] as $discount_type => $label)
                     <option value="{{ $discount_type }}" @selected(old('discount_type',$promo->discount_type ?? '')===$discount_type)>{{ $label }}</option>
                 @endforeach
             </select>
         </div>
 
         <div class="col-md-4 mb-3">
-            <label class="form-label">Значение</label>
+            <label class="form-label">{{ __('messages.promocodes.fields.value') }}</label>
             <input name="discount_value" type="number" step="0.01" min="0" class="form-control"
                    value="{{ old('discount_value', $promo->discount_value ?? '') }}" required>
             <small class="text-muted" id="valueHelp">
@@ -35,22 +35,22 @@
 
     <div class="row">
         <div class="col-md-3 mb-3">
-            <label class="form-label">Начало действия</label>
+            <label class="form-label">{{ __('messages.promocodes.fields.starts_at') }}</label>
             <input name="starts_at" type="datetime-local" class="form-control"
                    value="{{ old('starts_at', optional($promo->starts_at ?? null)->format('Y-m-d\TH:i')) }}">
         </div>
         <div class="col-md-3 mb-3">
-            <label class="form-label">Окончание действия</label>
+            <label class="form-label">{{ __('messages.promocodes.fields.ends_at') }}</label>
             <input name="ends_at" type="datetime-local" class="form-control"
                    value="{{ old('ends_at', optional($promo->ends_at ?? null)->format('Y-m-d\TH:i')) }}">
         </div>
         <div class="col-md-3 mb-3">
-            <label class="form-label">Мин. сумма заказа</label>
+            <label class="form-label">{{ __('messages.promocodes.fields.min_order') }}</label>
             <input name="min_order_amount" type="number" step="0.01" min="0" class="form-control"
                    value="{{ old('min_order_amount', $promo->min_order_amount ?? '') }}">
         </div>
         <div class="col-md-3 mb-3">
-            <label class="form-label">Лимит на клиента</label>
+            <label class="form-label">{{ __('messages.promocodes.fields.limit_per_client') }}</label>
             <input name="max_uses_per_client" type="number" min="1" class="form-control"
                    value="{{ old('max_uses_per_client', $promo->max_uses_per_client ?? '') }}">
         </div>
@@ -58,13 +58,13 @@
 
     <div class="row">
         <div class="col-md-3 mb-3">
-            <label class="form-label">Общий лимит использований</label>
+            <label class="form-label">{{ __('messages.promocodes.fields.limit_total') }}</label>
             <input name="max_uses" type="number" min="1" class="form-control"
                    value="{{ old('max_uses', $promo->max_uses ?? '') }}">
         </div>
 
         <div class="col-md-3 mb-3">
-            <label class="form-label">Применение</label>
+            <label class="form-label">{{ __('messages.promocodes.fields.applies_to') }}</label>
             <select name="applies_to" id="applies_to" class="form-select" required>
                 @foreach(['global'=>'Глобально','platform'=>'Площадка','price_list'=>'Прайс-лист'] as $v => $label)
                     <option value="{{ $v }}" @selected(old('applies_to',$promo->applies_to ?? 'global')===$v)>{{ $label }}</option>
@@ -73,7 +73,7 @@
         </div>
 
         <div class="col-md-3 mb-3" id="platformSelect" style="display: none;">
-            <label class="form-label">Площадка</label>
+            <label class="form-label">{{ __('messages.promocodes.applies.platform') }}</label>
             <select name="platform_id" class="form-select">
                 <option value="">— выберите —</option>
                 @foreach(($platforms ?? []) as $pl)
@@ -83,7 +83,7 @@
         </div>
 
         <div class="col-md-3 mb-3" id="pricelistSelect" style="display: none;">
-            <label class="form-label">Прайс-лист</label>
+            <label class="form-label">{{ __('messages.promocodes.applies.price_list') }}</label>
             <select name="price_list_id" class="form-select">
                 <option value="">— выберите —</option>
                 @foreach(($pricelists ?? []) as $pl)
@@ -97,15 +97,15 @@
 
     <div class="row">
         <div class="col-md-3 mb-3">
-            <label class="form-label">Активен</label><br>
+            <label class="form-label">{{ __('messages.promocodes.fields.active') }}</label><br>
             <input type="checkbox" name="is_active" value="1" @checked(old('is_active', $promo->is_active ?? true))>
         </div>
         <div class="col-md-3 mb-3">
-            <label class="form-label">Можно суммировать</label><br>
+            <label class="form-label">{{ __('messages.promocodes.fields.stackable') }}</label><br>
             <input type="checkbox" name="is_stackable" value="1" @checked(old('is_stackable', $promo->is_stackable ?? false))>
         </div>
     </div>
 
     <button class="btn btn-success">{{ $submitButtonText }}</button>
-    <a class="btn btn-link" href="{{ route('promocodes.index') }}">Отмена</a>
+    <a class="btn btn-link" href="{{ route('promocodes.index') }}">{{ __('messages.cancel') }}</a>
 </div>
