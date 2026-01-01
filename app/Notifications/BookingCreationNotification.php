@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\Platform;
+use App\Models\Booking;
 use App\Models\User;
 use App\Http\Controllers\UserController;
 use NotificationChannels\Telegram\TelegramMessage;
@@ -11,7 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class PlatformCreationNotification extends Notification
+class BookingCreationNotification extends Notification
 {
     use Queueable;
 
@@ -41,9 +41,9 @@ class PlatformCreationNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Создана новая площадка')
+            ->subject('Создано новое бронирование')
             ->greeting('Здравствуйте!')
-            ->line('Новая площадка создана пользователем ' . $this->user->name);
+            ->line('Новое бронирование создано пользователем ' . $this->user->name);
     }
 
     public function toTelegram($notifiable)
@@ -53,7 +53,7 @@ class PlatformCreationNotification extends Notification
             ->to($notifiable->telegram_chat_id) 
             ->content(
                 "*Здравствуйте*\n" .
-                "Новая площадка создана пользователем *{$this->user->name}.*" 
+                "Новое бронирование создано пользователем *{$this->user->name}.*" 
             )
             ->options(['parse_mode' => 'Markdown']);
     }

@@ -22,7 +22,7 @@ class LanguageController extends Controller
      */
     public function create()
     {
-        return view('languages.create');return view('languages.create');
+        return view('languages.create');
     }
 
     /**

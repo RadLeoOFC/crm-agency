@@ -38,4 +38,9 @@ class Booking extends Model
     {
         return $this->belongsTo(Slot::class);
     }
+
+    public function promocode()
+    {
+        return $this->belongsTo(PromoCode::class);
+    }
 }

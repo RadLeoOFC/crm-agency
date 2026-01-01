@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Notifications\BookingCreationNotification;
 use Illuminate\Support\Facades\DB;
 use App\Models\{Booking, Platform, Client, Slot};
 use App\Services\PricingService;
@@ -116,6 +118,20 @@ class BookingController extends Controller
                         $slot->status = 'booked';
                         $slot->save();
                     }
+                }
+
+                $creator = auth()->user(); // текущий залогиненный
+                foreach (User::role('admin')->get() as $admin) {
+                    $admin->notify(new BookingCreationNotification($creator));
+                }
+                foreach (User::role('manager')->get() as $manager) {
+                    $manager->notify(new BookingCreationNotification($creator));
+                }
+                foreach (User::role('client')->get() as $client) {
+                    $client->notify(new BookingCreationNotification($creator));
+                }
+                foreach (User::role('partner')->get() as $partner) {
+                    $partner->notify(new BookingCreationNotification($creator));
                 }
 
                 return redirect()

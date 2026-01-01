@@ -13,6 +13,11 @@ return [
     'languages' => 'Sprachen',
     'add_language' => 'Sprache hinzufügen',
     'language_added' => 'Sprache erfolgreich hinzugefügt',
+    'actions' => 'Aktionen',
+    'save' => 'Speichern',
+    'cancel' => 'Abbrechen',
+    'back' => 'Zurück',
+    'create' => 'Erstellen',
 
     /*
     |--------------------------------------------------------------------------
@@ -60,6 +65,14 @@ return [
     */
     'pricelists' => [
         'title' => 'Preislisten',
+        'title_show' => 'Preisliste',
+        'information' => 'Information',
+        'all' => 'Alle Preislisten',
+        'title_edit' => 'Preisliste bearbeiten',
+        'title_create' => 'Neue Preisliste hinzufügen',
+        'update_button' => 'Preisliste aktualisieren',
+        'create_button' => 'Preisliste erstellen',
+        'view' => 'Anzeigen',
 
         'fields' => [
             'platform' => 'Plattform',
@@ -77,6 +90,9 @@ return [
             'rules' => 'Regeln',
             'overrides' => 'Ausnahmen',
         ],
+
+        'confirm_delete' => 'Preisliste löschen?',
+        'generate_slots' => 'Slots generieren',
     ],
 
     /*
@@ -87,6 +103,10 @@ return [
     'clients' => [
         'title' => 'Kunden',
         'add' => 'Kunden hinzufügen',
+        'title_edit' => 'Kunden bearbeiten',
+        'title_create' => 'Neuen Kunden hinzufügen',
+        'update_button' => 'Kunden aktualisieren',
+        'create_button' => 'Kunden hinzufügen',
 
         'fields' => [
             'name' => 'Name',
@@ -100,6 +120,8 @@ return [
             'address' => 'Adresse',
             'active' => 'Aktiv',
         ],
+
+        'confirm_delete' => 'Möchten Sie diesen Kunden wirklich löschen?',
     ],
 
     /*
@@ -109,6 +131,10 @@ return [
     */
     'promocodes' => [
         'title' => 'Promocodes',
+        'title_edit' => 'Promocode bearbeiten',
+        'title_create' => 'Promocode erstellen',
+        'update_button' => 'Promocode aktualisieren',
+        'create_button' => 'Promocode erstellen',
 
         'fields' => [
             'code' => 'Code',
@@ -139,6 +165,8 @@ return [
             'platform' => 'Plattform',
             'price_list' => 'Preisliste',
         ],
+
+        'confirm_delete' => 'Promocode löschen?',
     ],
 
     /*
@@ -148,6 +176,8 @@ return [
     */
     'slots' => [
         'title' => 'Slots',
+        'edit_title' => 'Slot #:id bearbeiten',
+        'confirm_delete' => 'Slot löschen?',
 
         'fields' => [
             'weekday' => 'Wochentag',
@@ -155,8 +185,23 @@ return [
             'end' => 'Ende',
             'price' => 'Slot-Preis',
             'capacity' => 'Kapazität',
+            'used_capacity' => 'Verwendet',
             'status' => 'Status',
             'platform' => 'Plattform',
+            'price_list' => 'Preisliste',
+            'capacity_used' => 'Kap./Verw.',
+            'empty' => '—',
+        ],
+
+        'filters' => [
+            'all_platforms' => 'Alle Plattformen',
+            'any_status' => 'Beliebiger Status',
+        ],
+
+        'hints' => [
+            'price_list_optional' => 'Preisliste (optional)',
+            'not_specified' => '— nicht angegeben —',
+            'used_le_capacity' => '≤ Kapazität',
         ],
 
         'statuses' => [
@@ -174,17 +219,25 @@ return [
     */
     'bookings' => [
         'title' => 'Buchungen',
+        'title_show' => 'Buchung',
+        'title_edit' => 'Buchung bearbeiten',
+        'title_create' => 'Neue Buchung erstellen',
         'add' => 'Neue Buchung',
         'edit' => 'Bearbeiten',
+        'update_button' => 'Buchung aktualisieren',
+        'create_button' => 'Buchung erstellen',
         'view' => 'Anzeigen',
         'save' => 'Speichern',
         'cancel' => 'Abbrechen',
-        'no_items' => 'Keine Buchungen vorhanden',
+        'no_items' => 'Keine Buchungen',
         'delete_confirm' => 'Buchung löschen?',
+        'back' => 'Zurück zur Liste',
 
         'fields' => [
             'platform' => 'Plattform',
             'client' => 'Kunde',
+            'platform_select' => 'Plattform auswählen',
+            'client_select' => 'Kunden auswählen',
             'period' => 'Zeitraum',
             'price' => 'Preis',
             'status' => 'Status',
@@ -209,6 +262,8 @@ return [
     */
     'users' => [
         'title' => 'Benutzer',
+        'title_edit' => 'Benutzer bearbeiten',
+        'update_button' => 'Aktualisieren',
         'add' => 'Neuer Benutzer',
         'edit' => 'Bearbeiten',
         'delete_confirm' => 'Möchten Sie diesen Benutzer wirklich löschen?',
@@ -231,10 +286,15 @@ return [
     */
     'roles' => [
         'title' => 'Rollen',
+        'title_create' => 'Neue Rolle hinzufügen',
+        'title_edit' => 'Rolle bearbeiten',
+        'under_title_create' => 'Neue Rolle erstellen',
+        'update_button' => 'Aktualisieren',
         'list' => 'Rollenliste',
         'add' => 'Rolle hinzufügen',
         'edit' => 'Bearbeiten',
         'create' => 'Rolle erstellen',
+        'delete' => 'Löschen',
         'update' => 'Aktualisieren',
         'back' => 'Zurück',
         'delete_confirm' => 'Möchten Sie diese Rolle wirklich löschen?',
@@ -252,7 +312,9 @@ return [
     |--------------------------------------------------------------------------
     */
     'pricerules' => [
-        'title' => 'Regeln',
+        'title' => 'Preisregeln',
+        'title_edit' => 'Preisregel bearbeiten',
+        'title_create' => 'Preisregel erstellen',
         'add' => 'Regel hinzufügen',
         'edit' => 'Bearbeiten',
         'back' => 'Zurück zur Preisliste',
@@ -270,6 +332,8 @@ return [
         'hints' => [
             'weekday' => 'Leer = Regel gilt für jeden Tag',
         ],
+
+        'confirm_delete' => 'Regel löschen?',
     ],
 
     /*
@@ -278,8 +342,11 @@ return [
     |--------------------------------------------------------------------------
     */
     'priceoverrides' => [
-        'title' => 'Ausnahmen',
-        'add' => 'Ausnahme hinzufügen',
+        'title' => 'Preisabweichungen',
+        'title_edit' => 'Preisabweichung bearbeiten',
+        'title_create' => 'Preisabweichung erstellen',
+        'update_button' => 'Preisabweichung aktualisieren',
+        'add' => 'Abweichung hinzufügen',
         'edit' => 'Bearbeiten',
         'back' => 'Zurück zur Preisliste',
         'delete_confirm' => 'Löschen?',
@@ -292,5 +359,11 @@ return [
             'capacity' => 'Kapazität',
             'is_active' => 'Aktiv',
         ],
+    ],
+
+    'dashboard' => [
+        'title' => 'Dashboard',
+        'welcome' => 'Willkommen auf der Werbeplattform',
+        'go_home' => 'Zur Startseite',
     ],
 ];

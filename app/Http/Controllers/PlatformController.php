@@ -39,6 +39,10 @@ class PlatformController extends Controller
             $admin->notify(new PlatformCreationNotification($creator));
         }
         foreach (User::role('manager')->get() as $manager) {
+            \Log::info('Send telegram to', [
+                'id' => $manager->id,
+                'chat_id' => $manager->telegram_chat_id,
+            ]);
             $manager->notify(new PlatformCreationNotification($creator));
         }
 

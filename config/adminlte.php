@@ -318,7 +318,17 @@ return [
                     'text'=>'Russian',
                     'icon' => 'fas fa-fw fa-flag-ru',
                     'url'=> 'switch-language/ru'
-                ]
+                ],
+                [
+                    'text'=>'Bulgarian',
+                    'icon' => 'fas fa-fw fa-flag-bg',
+                    'url'=> 'switch-language/bg'
+                ],
+                [
+                    'text'=>'German',
+                    'icon' => 'fas fa-fw fa-flag-de',
+                    'url'=> 'switch-language/de'
+                ],
             ]
         ],
 
