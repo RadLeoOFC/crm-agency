@@ -52,7 +52,7 @@ class BookingController extends Controller
                     ->first();
 
                 if (!$priceList) {
-                    throw new \RuntimeException('Для площадки нет активного прайс-листа');
+                    throw new \RuntimeException(__('messages.bookings.messages.errors.no_active_pricelist'));
                 }
 
                 $slot  = null;
@@ -67,7 +67,7 @@ class BookingController extends Controller
                         ->firstOrFail();
 
                     if (!$slot->isAvailable()) {
-                        throw new \RuntimeException('Выбранный слот больше недоступен');
+                        throw new \RuntimeException(__('messages.bookings.messages.errors.slot_unavailable'));
                     }
 
                     $start = $slot->starts_at;
@@ -76,7 +76,7 @@ class BookingController extends Controller
                 } else {
                     // 🔹 бронирование по времени
                     if (empty($validated['starts_at']) || empty($validated['ends_at'])) {
-                        throw new \RuntimeException('Необходимо указать время начала и окончания');
+                        throw new \RuntimeException(__('messages.bookings.messages.errors.start_end_required'));
                     }
 
                     $tz    = $priceList->timezone;
@@ -136,7 +136,7 @@ class BookingController extends Controller
 
                 return redirect()
                     ->route('bookings.index')
-                    ->with('success', 'Booking created successfully');
+                    ->with('success', __('messages.bookings.messages.created'));
             });
 
         } catch (\Throwable $e) {
@@ -185,7 +185,7 @@ class BookingController extends Controller
         ]);
 
         if (in_array($booking->status, ['confirmed','completed'])) {
-            return back()->withErrors(['status'=>'Confirmed/completed bookings cannot be edited.']);
+            return back()->withErrors(['status'=> __('messages.bookings.messages.cannot_edit_confirmed')]);
         }
 
         $platform = Platform::findOrFail($request->platform_id);
@@ -206,7 +206,7 @@ class BookingController extends Controller
 
             if (!$priceList) {
                 return back()
-                    ->withErrors(['platform_id' => 'Для площадки нет активного прайс-листа'])
+                    ->withErrors(['platform_id' => __('messages.bookings.messages.errors.no_active_pricelist')])
                     ->withInput();
             }
             $tz    = $priceList->timezone;
@@ -230,7 +230,7 @@ class BookingController extends Controller
             if ($slot) {
                 $slot = Slot::whereKey($slot->id)->lockForUpdate()->first();
                 if (!$slot->isAvailable() && $slot->id !== optional($oldSlot)->id) {
-                    throw new \RuntimeException('New slot is not available');
+                    throw new \RuntimeException(__('messages.bookings.messages.errors.new_slot_unavailable'));
                 }
             }
 
@@ -258,12 +258,12 @@ class BookingController extends Controller
             }
         });
 
-        return redirect()->route('bookings.index')->with('success','Booking updated successfully.');
+        return redirect()->route('bookings.index')->with('success', __('messages.bookings.messages.updated'));
     }
 
     public function destroy(Booking $booking)
     {
         $booking->delete();
-        return redirect()->route('bookings.index')->with('success','Booking deleted successfully.');
+        return redirect()->route('bookings.index')->with('success', __('messages.bookings.messages.deleted'));
     }
 }

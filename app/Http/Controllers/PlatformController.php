@@ -46,7 +46,7 @@ class PlatformController extends Controller
             $manager->notify(new PlatformCreationNotification($creator));
         }
 
-        return redirect()->route('platforms.index')->with('success','Platform registered successfully.');
+        return redirect()->route('platforms.index')->with('success', __('messages.platforms.messages.created'));
     }
 
     public function show(Platform $platform)
@@ -74,13 +74,13 @@ class PlatformController extends Controller
 
         $platform->update($validated);
 
-        return redirect()->route('platforms.index')->with('success','Platform updated successfully.');
+        return redirect()->route('platforms.index')->with('success', __('messages.platforms.messages.updated'));
     }
 
     public function destroy(Platform $platform)
     {
         $platform->delete();
 
-        return redirect()->route('platforms.index')->with('success','Platform deleted successfully.');
+        return redirect()->route('platforms.index')->with('success', __('messages.platforms.messages.deleted'));
     }
 }

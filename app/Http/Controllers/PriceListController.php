@@ -50,7 +50,7 @@ class PriceListController extends Controller
 
         return redirect()
             ->route('pricelists.index', $priceList)
-            ->with('success','Прайс-лист создан. Теперь добавьте правила и исключения.');
+            ->with('success', __('messages.pricelists.messages.created'));
     }
 
     public function show(PriceList $pricelist)
@@ -89,7 +89,7 @@ class PriceListController extends Controller
 
         return redirect()
             ->route('pricelists.index', $pricelist)
-            ->with('success','Прайс-лист обновлён.');
+            ->with('success', __('messages.pricelists.messages.updated'));
     }
 
     public function destroy(PriceList $pricelist)
@@ -108,7 +108,7 @@ class PriceListController extends Controller
 
         return redirect()
             ->route('pricelists.show', $pricelist)
-            ->with('success', "Generated {$created} slots.");
+            ->with(__('messages.pricelists.messages.generated_slots', ['count' => $created]));
     }
 
 }

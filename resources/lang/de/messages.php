@@ -56,6 +56,13 @@ return [
             'facebook' => 'Facebook',
             'website' => 'Webseite',
         ],
+
+        'messages' => [
+            'created' => 'Plattform erfolgreich registriert.',
+            'updated' => 'Plattform erfolgreich aktualisiert.',
+            'deleted' => 'Plattform erfolgreich gelöscht.',
+        ],
+
     ],
 
     /*
@@ -91,6 +98,14 @@ return [
             'overrides' => 'Ausnahmen',
         ],
 
+        'messages' => [
+            'created' => 'Preisliste erstellt. Fügen Sie nun Regeln und Ausnahmen hinzu.',
+            'updated' => 'Preisliste aktualisiert.',
+            'deleted' => 'Preisliste erfolgreich gelöscht.',
+            'generated_slots' => ':count Slots erstellt.',
+        ],
+
+
         'confirm_delete' => 'Preisliste löschen?',
         'generate_slots' => 'Slots generieren',
     ],
@@ -120,6 +135,13 @@ return [
             'address' => 'Adresse',
             'active' => 'Aktiv',
         ],
+
+        'messages' => [
+            'created' => 'Kunde erfolgreich registriert.',
+            'updated' => 'Kunde erfolgreich aktualisiert.',
+            'deleted' => 'Kunde erfolgreich gelöscht.',
+        ],
+
 
         'confirm_delete' => 'Möchten Sie diesen Kunden wirklich löschen?',
     ],
@@ -166,6 +188,13 @@ return [
             'price_list' => 'Preisliste',
         ],
 
+        'messages' => [
+            'created' => 'Promocode erfolgreich erstellt.',
+            'updated' => 'Promocode erfolgreich aktualisiert.',
+            'deleted' => 'Promocode erfolgreich gelöscht.',
+        ],
+
+
         'confirm_delete' => 'Promocode löschen?',
     ],
 
@@ -210,6 +239,12 @@ return [
             'booked' => 'Gebucht',
             'cancelled' => 'Storniert',
         ],
+
+        'messages' => [
+            'updated' => 'Slot erfolgreich aktualisiert.',
+            'deleted' => 'Slot erfolgreich gelöscht.',
+        ],
+
     ],
 
     /*
@@ -253,6 +288,21 @@ return [
             'cancelled' => 'Storniert',
             'completed' => 'Abgeschlossen',
         ],
+
+        'messages' => [
+            'created' => 'Buchung erfolgreich erstellt.',
+            'updated' => 'Buchung erfolgreich aktualisiert.',
+            'deleted' => 'Buchung erfolgreich gelöscht.',
+            'cannot_edit_confirmed' => 'Bestätigte/abgeschlossene Buchungen können nicht bearbeitet werden.',
+
+            'errors' => [
+                'no_active_pricelist' => 'Für diese Plattform gibt es keine aktive Preisliste.',
+                'slot_unavailable' => 'Der ausgewählte Slot ist nicht mehr verfügbar.',
+                'start_end_required' => 'Start- und Endzeit müssen angegeben werden.',
+                'new_slot_unavailable' => 'Der neue Slot ist nicht verfügbar.',
+            ],
+        ],
+
     ],
 
     /*
@@ -275,6 +325,13 @@ return [
             'password' => 'Passwort',
             'roles' => 'Rollen',
         ],
+
+        'messages' => [
+            'created' => 'Neuer Benutzer erfolgreich erstellt.',
+            'updated' => 'Benutzerdaten erfolgreich aktualisiert.',
+            'deleted' => 'Benutzer erfolgreich gelöscht.',
+        ],
+
 
         'password_hint' => 'Leer lassen, wenn keine Änderung gewünscht',
     ],
@@ -304,6 +361,13 @@ return [
             'permissions' => 'Berechtigungen',
             'actions' => 'Aktionen',
         ],
+
+        'messages' => [
+            'created' => 'Rolle erfolgreich erstellt.',
+            'updated' => 'Rolle erfolgreich aktualisiert.',
+            'deleted' => 'Rolle erfolgreich gelöscht.',
+        ],
+
     ],
 
     /*
@@ -333,6 +397,13 @@ return [
             'weekday' => 'Leer = Regel gilt für jeden Tag',
         ],
 
+        'messages' => [
+            'created' => 'Regel erfolgreich hinzugefügt.',
+            'updated' => 'Regel erfolgreich aktualisiert.',
+            'deleted' => 'Regel erfolgreich gelöscht.',
+        ],
+
+
         'confirm_delete' => 'Regel löschen?',
     ],
 
@@ -359,6 +430,13 @@ return [
             'capacity' => 'Kapazität',
             'is_active' => 'Aktiv',
         ],
+
+        'messages' => [
+            'created' => 'Ausnahme erfolgreich hinzugefügt.',
+            'updated' => 'Ausnahme erfolgreich aktualisiert.',
+            'deleted' => 'Ausnahme erfolgreich gelöscht.',
+        ],
+
     ],
 
     'dashboard' => [

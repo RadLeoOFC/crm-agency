@@ -52,7 +52,7 @@ class ClientController extends Controller
 
         return redirect()
             ->route('clients.index')
-            ->with('success', 'Client registered successfully.');
+            ->with('success', __('messages.clients.messages.created'));
     }
 
     /**
@@ -93,7 +93,7 @@ class ClientController extends Controller
 
         return redirect()
             ->route('clients.index')
-            ->with('success', 'Client updated successfully.');
+            ->with('success', __('messages.clients.messages.updated'));
     }
 
     /**
@@ -105,7 +105,7 @@ class ClientController extends Controller
 
         return redirect()
             ->route('clients.index')
-            ->with('success', 'Client deleted successfully.');
+            ->with('success', __('messages.clients.messages.deleted'));
     }
 }
 

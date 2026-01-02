@@ -35,7 +35,7 @@ class PriceListRuleController extends Controller
 
         $pricelist->rules()->create($validated);
 
-        return redirect()->route('pricerules.index', $pricelist)->with('success','Правило добавлено.');
+        return redirect()->route('pricerules.index', $pricelist)->with('success', __('messages.pricerules.messages.created'));
     }
 
     public function edit(PriceList $pricelist, PriceListRule $rule)
@@ -56,13 +56,13 @@ class PriceListRuleController extends Controller
 
         $rule->update($validated);
 
-        return redirect()->route('pricerules.index', $pricelist)->with('success','Правило обновлено.');
+        return redirect()->route('pricerules.index', $pricelist)->with('success', __('messages.pricerules.messages.updated'));
     }
 
     public function destroy(PriceList $pricelist, PriceListRule $rule)
     {
         $pricelist = $rule->priceList;
         $rule->delete();
-        return redirect()->route('pricerules.index', $pricelist)->with('success','Правило удалено.');
+        return redirect()->route('pricerules.index', $pricelist)->with('success', __('messages.pricerules.messages.deleted'));
     }
 }

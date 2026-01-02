@@ -45,7 +45,7 @@ class PromoCodeController extends Controller
 
         PromoCode::create($validated);
 
-        return redirect()->route('promocodes.index')->with('success','Промокод создан.');
+        return redirect()->route('promocodes.index')->with('success', __('messages.promocodes.messages.created'));
     }
 
     public function edit(PromoCode $promocode)
@@ -78,12 +78,12 @@ class PromoCodeController extends Controller
 
         $promocode->update($validated);
 
-        return redirect()->route('promocodes.index')->with('success','Промокод обновлён.');
+        return redirect()->route('promocodes.index')->with('success', __('messages.promocodes.messages.updated'));
     }
 
     public function destroy(PromoCode $promocode)
     {
         $promocode->delete();
-        return redirect()->route('promocodes.index')->with('success','Промокод удалён.');
+        return redirect()->route('promocodes.index')->with('success', __('messages.promocodes.messages.deleted'));
     }
 }

@@ -47,7 +47,7 @@ class UserController extends Controller
         }
 
         return redirect()->route('users.index')
-            ->with('success', 'Новый пользователь успешно создан.');
+            ->with('success', __('messages.users.messages.created'));
     }
 
     public function edit(User $user)
@@ -81,7 +81,7 @@ class UserController extends Controller
         }
 
         return redirect()->route('users.index')
-            ->with('success', 'Данные пользователя успешно обновлены.');
+            ->with('success', __('messages.users.messages.updated'));
     }
 
     public function destroy(User $user)
@@ -89,6 +89,6 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('users.index')
-            ->with('success', 'Пользователь успешно удален.');
+            ->with('success', __('messages.users.messages.deleted'));
     }
 }

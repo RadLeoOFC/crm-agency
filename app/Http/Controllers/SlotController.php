@@ -48,12 +48,12 @@ class SlotController extends Controller
         ]);
         $slot->update($validated);
 
-        return redirect()->route('slots.index')->with('success','Слот обновлён.');
+        return redirect()->route('slots.index')->with('success', __('messages.slots.messages.updated'));
     }
 
     public function destroy(Slot $slot)
     {
         $slot->delete();
-        return redirect()->route('slots.index')->with('success','Слот удалён.');
+        return redirect()->route('slots.index')->with('success', __('messages.slots.messages.deleted'));
     }
 }

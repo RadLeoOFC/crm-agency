@@ -56,6 +56,13 @@ return [
             'facebook' => 'Facebook',
             'website' => 'Website',
         ],
+
+        'messages' => [
+            'created' => 'Platform registered successfully.',
+            'updated' => 'Platform updated successfully.',
+            'deleted' => 'Platform deleted successfully.',
+        ],
+
     ],
 
     /*
@@ -91,6 +98,13 @@ return [
             'overrides' => 'Overrides',
         ],
 
+        'messages' => [
+            'created' => 'Price list created. Now add rules and overrides.',
+            'updated' => 'Price list updated.',
+            'deleted' => 'Price list deleted successfully.',
+            'generated_slots' => 'Generated :count slots.',
+        ],
+
         'confirm_delete' => 'Delete pricelist?',
         'generate_slots' => 'Generate slots',
     ],
@@ -120,6 +134,13 @@ return [
             'address' => 'Address',
             'active' => 'Active',
         ],
+
+        'messages' => [
+            'created' => 'Client registered successfully.',
+            'updated' => 'Client updated successfully.',
+            'deleted' => 'Client deleted successfully.',
+        ],
+
 
         'confirm_delete' => 'Are you sure you want to delete this client?',
     ],
@@ -166,6 +187,13 @@ return [
             'price_list' => 'Price list',
         ],
 
+        'messages' => [
+            'created' => 'Promocode created successfully.',
+            'updated' => 'Promocode updated successfully.',
+            'deleted' => 'Promocode deleted successfully.',
+        ],
+
+
         'confirm_delete' => 'Delete promocode?',
     ],
 
@@ -210,6 +238,12 @@ return [
             'booked' => 'Booked',
             'cancelled' => 'Cancelled',
         ],
+
+        'messages' => [
+            'updated' => 'Slot updated successfully.',
+            'deleted' => 'Slot deleted successfully.',
+        ],
+
     ],
 
 
@@ -255,6 +289,21 @@ return [
             'cancelled' => 'Cancelled',
             'completed' => 'Completed',
         ],
+
+        'messages' => [
+            'created' => 'Booking created successfully.',
+            'updated' => 'Booking updated successfully.',
+            'deleted' => 'Booking deleted successfully.',
+            'cannot_edit_confirmed' => 'Confirmed/completed bookings cannot be edited.',
+
+            'errors' => [
+                'no_active_pricelist' => 'No active price list for this platform.',
+                'slot_unavailable' => 'The selected slot is no longer available.',
+                'start_end_required' => 'Start and end time are required.',
+                'new_slot_unavailable' => 'New slot is not available.',
+            ],
+        ],
+
     ],
 
     /*
@@ -277,6 +326,13 @@ return [
             'password' => 'Password',
             'roles' => 'Roles',
         ],
+
+        'messages' => [
+            'created' => 'New user created successfully.',
+            'updated' => 'User updated successfully.',
+            'deleted' => 'User deleted successfully.',
+        ],
+
 
         'password_hint' => 'Leave empty if you do not want to change it',
     ],
@@ -306,6 +362,13 @@ return [
             'permissions' => 'Permissions',
             'actions' => 'Actions',
         ],
+
+        'messages' => [
+            'created' => 'Role created successfully.',
+            'updated' => 'Role updated successfully.',
+            'deleted' => 'Role deleted successfully.',
+        ],
+
     ],
 
     /*
@@ -331,6 +394,13 @@ return [
             'capacity' => 'Capacity',
             'is_active' => 'Active',
         ],
+
+        'messages' => [
+            'created' => 'Rule added successfully.',
+            'updated' => 'Rule updated successfully.',
+            'deleted' => 'Rule deleted successfully.',
+        ],
+
 
         'hints' => [
             'weekday' => 'Empty = rule applies to any day',
@@ -360,6 +430,13 @@ return [
             'capacity' => 'Capacity',
             'is_active' => 'Active',
         ],
+
+        'messages' => [
+            'created' => 'Override added successfully.',
+            'updated' => 'Override updated successfully.',
+            'deleted' => 'Override deleted successfully.',
+        ],
+
     ],
 
     'dashboard' => [

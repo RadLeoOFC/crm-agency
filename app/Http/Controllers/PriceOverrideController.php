@@ -35,7 +35,7 @@ class PriceOverrideController extends Controller
 
         $pricelist->overrides()->create($validated);
 
-        return redirect()->route('priceoverrides.index', $pricelist)->with('success','Исключение добавлено.');
+        return redirect()->route('priceoverrides.index', $pricelist)->with('success', __('messages.priceoverrides.messages.created'));
     }
 
     public function edit(PriceList $pricelist, PriceOverride $override)
@@ -67,7 +67,7 @@ class PriceOverrideController extends Controller
             'data' => $request->all()
         ]);
 
-        return redirect()->route('priceoverrides.index', $pricelist)->with('success','Исключение обновлено.');
+        return redirect()->route('priceoverrides.index', $pricelist)->with('success', __('messages.priceoverrides.messages.created'));
     }
 
     public function destroy(PriceList $pricelist, PriceOverride $override)
@@ -75,6 +75,6 @@ class PriceOverrideController extends Controller
         $pricelist = $override->priceList;
         $override->delete();
 
-        return redirect()->route('priceoverrides.index', $pricelist)->with('success','Исключение удалено.');
+        return redirect()->route('priceoverrides.index', $pricelist)->with('success', __('messages.priceoverrides.messages.deleted'));
     }
 }
