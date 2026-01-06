@@ -30,6 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('switch-language/{code}', [LanguageSwitchController::class, 'switch'])
+    ->name('language.switch');
+
 // Authenticated routes
 Route::middleware(['auth', 'verified'])->group(function () {
 
@@ -297,8 +300,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware('permission:languages.delete')
         ->name('languages.destroy');
 
-    Route::get('switch-language/{code}', [LanguageSwitchController::class, 'switch'])
-    ->name('language.switch');
+
 
 
 });

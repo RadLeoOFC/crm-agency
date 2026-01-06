@@ -28,9 +28,6 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        // Set is_active to false if not present in request (unchecked checkbox)
-        $request->merge(['is_active' => $request->has('is_active')]);
-        
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -57,10 +54,7 @@ class UserController extends Controller
     }
 
     public function update(Request $request, User $user)
-    {
-        // Set is_active to false if not present in request (unchecked checkbox)
-        $request->merge(['is_active' => $request->has('is_active')]);
-        
+    {   
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,

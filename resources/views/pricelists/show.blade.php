@@ -60,7 +60,7 @@
             </tr>
             <tr>
                 <th>{{ __('messages.pricelists.fields.active') }}</th>
-                <td>{{ $pricelist->is_active ? 'Да' : 'Нет' }}</td>
+                <td>{{ $pricelist->is_active ? __('messages.yes'):__('messages.no') }}</td>
             </tr>
         </table>
     </div>

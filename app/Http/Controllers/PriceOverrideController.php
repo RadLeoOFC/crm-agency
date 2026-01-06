@@ -24,8 +24,11 @@ class PriceOverrideController extends Controller
 
     public function store(Request $request, PriceList $pricelist)
     {
+        // Set is_active to false if not present in request (unchecked checkbox)
+        $request->merge(['is_active' => $request->has('is_active')]);
+
         $validated = $request->validate([
-            'for_date'   => ['required','date'],
+            'for_date'   => ['required','date','after_or_equal:today'],
             'starts_at'  => ['required','date_format:H:i'],
             'ends_at'    => ['required','date_format:H:i','after:starts_at'],
             'slot_price' => ['required','numeric','min:0'],
@@ -48,8 +51,11 @@ class PriceOverrideController extends Controller
         \Log::info('REQUEST', $request->all());
         \Log::info('VALIDATED BEFORE', []);
 
+        // Set is_active to false if not present in request (unchecked checkbox)
+        $request->merge(['is_active' => $request->has('is_active')]);
+
         $validated = $request->validate([
-            'for_date'   => ['required','date'],
+            'for_date'   => ['required','date','after_or_equal:today'],
             'starts_at'  => ['required','date_format:H:i'],
             'ends_at'    => ['required','date_format:H:i','after:starts_at'],
             'slot_price' => ['required','numeric','min:0'],

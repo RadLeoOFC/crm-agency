@@ -35,12 +35,15 @@ class PriceListController extends Controller
 
     public function store(Request $request)
     {
+        // Set is_active to false if not present in request (unchecked checkbox)
+        $request->merge(['is_active' => $request->has('is_active')]);
+
         $validated = $request->validate([
             'platform_id'            => ['required','exists:platforms,id'],
             'name'                   => ['required','string','max:255'],
             'currency'               => ['required','string','size:3'],
             'is_active'              => ['sometimes','boolean'],
-            'valid_from'             => ['nullable','date'],
+            'valid_from'             => ['nullable','date','after_or_equal:today'],
             'valid_to'               => ['nullable','date','after_or_equal:valid_from'],
             'timezone'               => ['required','string','max:64'],
             'default_slot_duration'  => ['required','integer','min:5','max:480'],
@@ -74,12 +77,15 @@ class PriceListController extends Controller
 
     public function update(Request $request, PriceList $pricelist)
     {
+        // Set is_active to false if not present in request (unchecked checkbox)
+        $request->merge(['is_active' => $request->has('is_active')]);
+
         $validated = $request->validate([
             'platform_id'            => ['required','exists:platforms,id'],
             'name'                   => ['required','string','max:255'],
             'currency'               => ['required','string','size:3'],
             'is_active'              => ['sometimes','boolean'],
-            'valid_from'             => ['nullable','date'],
+            'valid_from'             => ['nullable','date','after_or_equal:today'],
             'valid_to'               => ['nullable','date','after_or_equal:valid_from'],
             'timezone'               => ['required','string','max:64'],
             'default_slot_duration'  => ['required','integer','min:5','max:480'],

@@ -18,6 +18,8 @@ return [
     'cancel' => 'Abbrechen',
     'back' => 'Zurück',
     'create' => 'Erstellen',
+    'yes' => 'Ja',
+    'no' => 'Nein',
 
     /*
     |--------------------------------------------------------------------------
@@ -300,6 +302,7 @@ return [
                 'slot_unavailable' => 'Der ausgewählte Slot ist nicht mehr verfügbar.',
                 'start_end_required' => 'Start- und Endzeit müssen angegeben werden.',
                 'new_slot_unavailable' => 'Der neue Slot ist nicht verfügbar.',
+                'no_pricelist_rule_for_time' => 'Für die gewählte Zeit wurden keine Preisregeln gefunden. Bitte Regeln/Ausnahmen prüfen.',
             ],
         ],
 
@@ -444,4 +447,22 @@ return [
         'welcome' => 'Willkommen auf der Werbeplattform',
         'go_home' => 'Zur Startseite',
     ],
+
+    'login_heading' => 'Willkommen! Anmeldung',
+    'register_form' => 'Registrierungsformular',
+    'email' => 'E-Mail',
+    'password' => 'Passwort',
+    'confirm_password' => 'Passwort bestätigen',
+    'remember_me' => 'Angemeldet bleiben',
+    'forgot_password' => 'Passwort vergessen?',
+    'create_account' => 'Konto erstellen',
+    'already_registered' => 'Bereits registriert?',
+    'reset_password' => 'Passwort zurücksetzen',
+    'verify_email_message' => 'Danke für Ihre Registrierung! Bitte bestätigen Sie Ihre E-Mail-Adresse, indem Sie auf den Link klicken, den wir Ihnen gesendet haben. Wenn Sie keine E-Mail erhalten haben, senden wir Ihnen gerne eine weitere.',
+    'verification_sent' => 'Ein neuer Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet.',
+    'resend_verification_email' => 'Bestätigungs-E-Mail erneut senden',
+    'confirm_password_text' => 'Dies ist ein geschützter Bereich. Bitte bestätigen Sie Ihr Passwort, um fortzufahren.',
+    'confirm' => 'Bestätigen',
+    'forgot_password_text' => 'Passwort vergessen? Kein Problem. Geben Sie einfach Ihre E-Mail-Adresse ein, und wir senden Ihnen einen Link zum Zurücksetzen des Passworts.',
+    'send_reset_link' => 'Link zum Zurücksetzen senden',
 ];

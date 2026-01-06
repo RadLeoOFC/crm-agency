@@ -18,6 +18,8 @@ return [
     'cancel' => 'Cancel',
     'save' => 'Save',
     'create' => 'Create',
+    'yes' => 'Yes',
+    'no' => 'No',
 
     /*
     |--------------------------------------------------------------------------
@@ -301,6 +303,7 @@ return [
                 'slot_unavailable' => 'The selected slot is no longer available.',
                 'start_end_required' => 'Start and end time are required.',
                 'new_slot_unavailable' => 'New slot is not available.',
+                'no_pricelist_rule_for_time' => 'No pricing rules found for the selected time. Please check price list rules/overrides.',
             ],
         ],
 
@@ -444,6 +447,26 @@ return [
         'welcome' => 'Welcome to the advertising platform',
         'go_home' => 'Go to homepage',
     ],
+
+    'login_heading' => 'Welcome! Login',
+    'register_form' => 'Register form',
+    'email' => 'Email',
+    'password' => 'Password',
+    'confirm_password' => 'Confirm Password',
+    'remember_me' => 'Remember me',
+    'forgot_password' => 'Forgot your password?',
+    'create_account' => 'Create an account',
+    'login' => 'Log in',
+    'already_registered' => 'Already registered?',
+    'register' => 'Register',
+    'reset_password' => 'Reset Password',
+    'verify_email_message' => 'Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.',
+    'verification_sent' => 'A new verification link has been sent to the email address you provided during registration.',
+    'resend_verification_email' => 'Resend Verification Email',
+    'confirm_password_text' => 'This is a secure area of the application. Please confirm your password before continuing.',
+    'confirm' => 'Confirm',
+    'forgot_password_text' => 'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.',
+    'send_reset_link' => 'Email Password Reset Link',
 
 
 ];

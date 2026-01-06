@@ -1,4 +1,15 @@
 <div class="card">
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-md-4 mb-3">
             <label class="form-label">{{ __('messages.promocodes.fields.code') }}</label>

@@ -39,7 +39,7 @@ class SlotController extends Controller
         $validated = $request->validate([
             'platform_id'   => ['required','exists:platforms,id'],
             'price_list_id' => ['nullable','exists:price_lists,id'],
-            'starts_at'     => ['required','date'],
+            'starts_at'     => ['required','date','after_or_equal:today'],
             'ends_at'       => ['required','date','after:starts_at'],
             'price'         => ['required','numeric','min:0'],
             'status'        => ['required','in:available,reserved,booked,cancelled'],

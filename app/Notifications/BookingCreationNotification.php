@@ -41,20 +41,21 @@ class BookingCreationNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Создано новое бронирование')
-            ->greeting('Здравствуйте!')
-            ->line('Новое бронирование создано пользователем ' . $this->user->name);
+            ->subject(__('notifications.booking_created.subject'))
+            ->greeting(__('notifications.common.hello'))
+            ->line(__('notifications.booking_created.line', ['user' => $this->user->name]));
     }
 
     public function toTelegram($notifiable)
     {
+        $text =
+            "*".__('notifications.common.hello_md')."*\n".
+            __('notifications.booking_created.telegram', ['user' => $this->user->name]);
+
 
         return TelegramMessage::create()
             ->to($notifiable->telegram_chat_id) 
-            ->content(
-                "*Здравствуйте*\n" .
-                "Новое бронирование создано пользователем *{$this->user->name}.*" 
-            )
+            ->content($text)
             ->options(['parse_mode' => 'Markdown']);
     }
 

@@ -23,6 +23,9 @@ class PlatformController extends Controller
 
     public function store(Request $request)
     {
+        // Set is_active to false if not present in request (unchecked checkbox)
+        $request->merge(['is_active' => $request->has('is_active')]);
+
         $validated = $request->validate([
             'name'        => 'required|string|max:255',
             'type'        => 'required|in:telegram,youtube,facebook,website',
@@ -63,6 +66,9 @@ class PlatformController extends Controller
 
     public function update(Request $request, Platform $platform)
     {
+        // Set is_active to false if not present in request (unchecked checkbox)
+        $request->merge(['is_active' => $request->has('is_active')]);
+
         $validated = $request->validate([
             'name'        => 'required|string|max:255',
             'type'        => 'required|in:telegram,youtube,facebook,website',

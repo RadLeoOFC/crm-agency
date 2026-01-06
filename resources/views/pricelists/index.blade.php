@@ -29,7 +29,7 @@
       <td>{{ $pricelist->currency }}</td>
       <td>{{ $pricelist->valid_from ?? '—' }} — {{ $pricelist->valid_to ?? '—' }}</td>
       <td>{{ $pricelist->timezone }}</td>
-      <td>{{ $pricelist->is_active ? 'Да':'Нет' }}</td>
+      <td>{{ $pricelist->is_active ? __('messages.yes'):__('messages.no') }}</td>
       <td class="text-end">
         <a href="{{ route('pricelists.show', $pricelist) }}" class="btn btn-sm btn-outline-primary">{{ __('messages.pricelists.view') }}</a>
         <form method="POST" action="{{ route('pricelists.destroy',$pricelist) }}" onsubmit="return confirm('{{ __('messages.pricelists.confirm_delete') }}')">

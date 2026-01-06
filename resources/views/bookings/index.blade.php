@@ -25,7 +25,7 @@
                 <th>{{ __('messages.bookings.fields.period') }}</th>
                 <th>{{ __('messages.bookings.fields.price') }}</th>
                 <th>{{ __('messages.bookings.fields.status') }}</th>
-                <th>{{ __('messages.bookings.actions') }}</th>
+                <th>{{ __('messages.actions') }}</th>
             </tr>
         </thead>
         <tbody>

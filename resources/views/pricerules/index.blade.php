@@ -20,12 +20,12 @@
   <tbody>
     @foreach($rules as $rule)
     <tr>
-      <td>{{ $rule->weekday ?? 'Любой' }}</td>
+      <td>{{ $rule->weekday ??  __('messages.pricerules.any_day') }}</td>
       <td>{{ $rule->starts_at }}</td>
       <td>{{ $rule->ends_at }}</td>
       <td>{{ number_format($rule->slot_price,2,'.',' ') }} {{ $pricelist->currency }}</td>
       <td>{{ $rule->capacity }}</td>
-      <td>{{ $rule->is_active ? 'Да':'Нет' }}</td>
+      <td>{{ $rule->is_active ? __('messages.yes'):__('messages.no') }}</td>
       <td class="text-end">
         <a class="btn btn-sm btn-outline-primary" href="{{ route('pricerules.edit', [$pricelist, $rule]) }}">{{ __('messages.pricerules.edit') }}</a>
         <form class="d-inline" method="POST" action="{{ route('pricerules.destroy', [$pricelist, $rule]) }}" onsubmit="return confirm('{{ __('messages.pricerules.confirm_delete') }}')">

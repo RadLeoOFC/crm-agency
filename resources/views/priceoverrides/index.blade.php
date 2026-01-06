@@ -25,7 +25,7 @@
       <td>{{ $override->ends_at }}</td>
       <td>{{ number_format($override->slot_price,2,'.',' ') }} {{ $pricelist->currency }}</td>
       <td>{{ $override->capacity ?? '—' }}</td>
-      <td>{{ $override->is_active ? 'Да':'Нет' }}</td>
+      <td>{{ $override->is_active ? __('messages.yes'):__('messages.no') }}</td>
       <td class="text-end">
         <a class="btn btn-sm btn-outline-primary" href="{{ route('priceoverrides.edit', [$pricelist, $override]) }}">{{ __('messages.priceoverrides.edit') }}</a>
         <form class="d-inline" method="POST" action="{{ route('priceoverrides.destroy', [$pricelist, $override]) }}" onsubmit="return confirm('{{ __('messages.priceoverrides.confirm_delete') }}')">

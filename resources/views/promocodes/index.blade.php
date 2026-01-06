@@ -27,7 +27,7 @@
       <td>{{ $promocode->discount_value }} {{ $promocode->discount_type==='fixed' ? $promocode->currency : '%' }}</td>
       <td>{{ $promocode->starts_at ?? '—' }} → {{ $promocode->ends_at ?? '—' }}</td>
       <td>{{ $promocode->applies_to }}</td>
-      <td>{{ $promocode->is_active ? 'Да':'Нет' }}</td>
+      <td>{{ $promocode->is_active ? __('messages.yes'):__('messages.no') }}</td>
       <td class="text-end">
         <a class="btn btn-sm btn-outline-primary" href="{{ route('promocodes.edit',$promocode) }}">{{ __('messages.edit') }}</a>
         <form class="d-inline" method="POST" action="{{ route('promocodes.destroy',$promocode) }}" onsubmit="return confirm('{{ __('messages.promocodes.confirm_delete') }}')">

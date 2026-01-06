@@ -24,6 +24,9 @@ class PriceListRuleController extends Controller
 
     public function store(Request $request, PriceList $pricelist)
     {
+        // Set is_active to false if not present in request (unchecked checkbox)
+        $request->merge(['is_active' => $request->has('is_active')]);
+
         $validated = $request->validate([
             'weekday'    => ['nullable','integer','min:1','max:7'],
             'starts_at'  => ['required','date_format:H:i'],
@@ -45,6 +48,9 @@ class PriceListRuleController extends Controller
 
     public function update(Request $request, PriceList $pricelist, PriceListRule $rule)
     {
+        // Set is_active to false if not present in request (unchecked checkbox)
+        $request->merge(['is_active' => $request->has('is_active')]);
+
         $validated = $request->validate([
             'weekday'    => ['nullable','integer','min:1','max:7'],
             'starts_at'  => ['required','date_format:H:i'],

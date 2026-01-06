@@ -28,7 +28,12 @@ class PricingService
                 ->where('ends_at', '>=', $endAt->format('H:i:s'))
                 ->where('is_active', true)
                 ->orderByRaw('weekday is null')
-                ->firstOrFail();
+                ->first();
+
+            if (!$rule) {
+                throw new \RuntimeException(__('messages.bookings.messages.errors.no_pricelist_rule_for_time'));
+            }
+
             $listPrice = (float)$rule->slot_price;
             $capacity  = (int)$rule->capacity;
             $bandStart = $rule->starts_at;

@@ -35,6 +35,9 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+        // Set is_active to false if not present in request (unchecked checkbox)
+        $request->merge(['is_active' => $request->has('is_active')]);
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'contact_person' => 'required|string|max:255',
@@ -76,6 +79,9 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
+        // Set is_active to false if not present in request (unchecked checkbox)
+        $request->merge(['is_active' => $request->has('is_active')]);
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'contact_person' => 'required|string|max:255',

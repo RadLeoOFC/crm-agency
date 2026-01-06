@@ -26,6 +26,9 @@ class PromoCodeController extends Controller
 
     public function store(Request $request)
     {
+        // Set is_active to false if not present in request (unchecked checkbox)
+        $request->merge(['is_active' => $request->has('is_active')]);
+
         $validated = $request->validate([
             'code'                 => ['required','string','max:64','unique:promo_codes,code'],
             'discount_type'        => ['required','in:percent,fixed'],
@@ -33,7 +36,7 @@ class PromoCodeController extends Controller
             'currency'             => ['nullable','string','size:3'],
             'max_uses'             => ['nullable','integer','min:1'],
             'max_uses_per_client'  => ['nullable','integer','min:1'],
-            'starts_at'            => ['nullable','date'],
+            'starts_at'            => ['nullable','date','after_or_equal:today'],
             'ends_at'              => ['nullable','date','after_or_equal:starts_at'],
             'min_order_amount'     => ['nullable','numeric','min:0'],
             'applies_to'           => ['required','in:global,platform,price_list'],
@@ -59,6 +62,9 @@ class PromoCodeController extends Controller
 
     public function update(Request $request, PromoCode $promocode)
     {
+        // Set is_active to false if not present in request (unchecked checkbox)
+        $request->merge(['is_active' => $request->has('is_active')]);
+
         $validated = $request->validate([
             'code'                 => ['required','string','max:64',"unique:promo_codes,code,{$promocode->id}"],
             'discount_type'        => ['required','in:percent,fixed'],
@@ -66,7 +72,7 @@ class PromoCodeController extends Controller
             'currency'             => ['nullable','string','size:3'],
             'max_uses'             => ['nullable','integer','min:1'],
             'max_uses_per_client'  => ['nullable','integer','min:1'],
-            'starts_at'            => ['nullable','date'],
+            'starts_at'            => ['nullable','date','after_or_equal:today'],
             'ends_at'              => ['nullable','date','after_or_equal:starts_at'],
             'min_order_amount'     => ['nullable','numeric','min:0'],
             'applies_to'           => ['required','in:global,platform,price_list'],
