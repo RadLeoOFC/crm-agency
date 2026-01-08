@@ -53,7 +53,7 @@
                                     <form action="{{ route('clients.destroy', $client) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ __('messages.clients.delete_confirm') }}')">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ __('messages.clients.confirm_delete') }}')">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>

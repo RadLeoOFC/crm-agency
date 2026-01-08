@@ -20,6 +20,7 @@ return [
     'create' => 'Erstellen',
     'yes' => 'Ja',
     'no' => 'Nein',
+    'languages_confirm_delete' => 'Möchten Sie diese Sprache wirklich löschen?',
 
     /*
     |--------------------------------------------------------------------------

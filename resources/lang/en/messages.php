@@ -20,6 +20,7 @@ return [
     'create' => 'Create',
     'yes' => 'Yes',
     'no' => 'No',
+    'languages_confirm_delete' => 'Are you sure you want to delete this language?',
 
     /*
     |--------------------------------------------------------------------------

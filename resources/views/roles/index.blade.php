@@ -50,7 +50,7 @@
                             <form action="{{ route('roles.destroy', $role) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-xs btn-danger" onclick="return confirm('{{ __('messages.roles.confirm_delete') }}')">
+                                <button type="submit" class="btn btn-xs btn-danger" onclick="return confirm('{{ __('messages.roles.delete_confirm') }}')">
                                     <i class="fas fa-trash"></i> {{ __('messages.roles.delete') }}
                                 </button>
                             </form>

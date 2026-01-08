@@ -27,7 +27,7 @@ class LanguagesPermissionsSeeder extends Seeder
         }
 
         // Assign permissions to admin role
-        $admin = Role::create(['name' => 'admin', 'guard_name' => 'web']);
+        $adminRole = Role::findByName('admin');
         $admin->givePermissionTo(Permission::all());
     }
 }

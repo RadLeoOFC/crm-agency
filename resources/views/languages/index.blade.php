@@ -30,7 +30,7 @@
                             <form action="{{ route('languages.destroy', $language) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
-                                <button onclick="return confirm('{{ __('messages.confirm_delete') }}')" class="btn btn-sm btn-danger">{{ __('messages.delete') }}</button>
+                                <button onclick="return confirm('{{ __('messages.languages_confirm_delete') }}')" class="btn btn-sm btn-danger">{{ __('messages.delete') }}</button>
                             </form>
                         </td>
                     </tr>

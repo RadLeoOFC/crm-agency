@@ -28,7 +28,7 @@
       <td>{{ $override->is_active ? __('messages.yes'):__('messages.no') }}</td>
       <td class="text-end">
         <a class="btn btn-sm btn-outline-primary" href="{{ route('priceoverrides.edit', [$pricelist, $override]) }}">{{ __('messages.priceoverrides.edit') }}</a>
-        <form class="d-inline" method="POST" action="{{ route('priceoverrides.destroy', [$pricelist, $override]) }}" onsubmit="return confirm('{{ __('messages.priceoverrides.confirm_delete') }}')">
+        <form class="d-inline" method="POST" action="{{ route('priceoverrides.destroy', [$pricelist, $override]) }}" onsubmit="return confirm('{{ __('messages.priceoverrides.delete_confirm') }}')">
           @csrf @method('DELETE')
           <button class="btn btn-sm btn-outline-danger">{{ __('messages.delete') }}</button>
         </form>
