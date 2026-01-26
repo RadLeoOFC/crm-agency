@@ -470,4 +470,14 @@ return [
     'send_reset_link' => 'Email Password Reset Link',
 
 
+    'telegram' => [
+        'connect_title'  => 'Connect Telegram',
+        'connect_text'   => 'To receive notifications, connect Telegram: open the bot, tap Start, then share your contact.',
+        'connect_button' => 'Connect Telegram',
+    ],
+
+    'country_code' => 'Country code',
+    'phone_number' => 'Phone number',
+
+
 ];

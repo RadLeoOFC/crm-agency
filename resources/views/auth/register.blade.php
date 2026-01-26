@@ -17,6 +17,35 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- Phone -->
+        <div class="mt-4">
+            <x-input-label for="country_code" :value="__('messages.country_code')" />
+
+            <select id="country_code" name="country_code" class="block mt-1 w-full border-gray-300 rounded-md">
+                <option value="+380" {{ old('country_code')=='+380' ? 'selected' : '' }}>🇺🇦 +380</option>
+                <option value="+359" {{ old('country_code')=='+359' ? 'selected' : '' }}>🇧🇬 +359</option>
+                <option value="+7"   {{ old('country_code')=='+7'   ? 'selected' : '' }}>🇷🇺 +7</option>
+                <option value="+49"  {{ old('country_code')=='+49'  ? 'selected' : '' }}>🇩🇪 +49</option>
+                <option value="+1"   {{ old('country_code')=='+1'   ? 'selected' : '' }}>🇺🇸 +1</option>
+            </select>
+
+            <x-input-error :messages="$errors->get('country_code')" class="mt-2" />
+        </div>
+
+        <div class="mt-4">
+            <x-input-label for="phone" :value="__('messages.phone_number')" />
+            <x-text-input id="phone" class="block mt-1 w-full"
+                type="text"
+                name="phone"
+                :value="old('phone')"
+                required
+                autocomplete="tel"
+                placeholder="672811633" />
+            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+        </div>
+
+
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('messages.password')" />

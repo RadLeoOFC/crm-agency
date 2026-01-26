@@ -30,15 +30,23 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'name' => ['required','string','max:255'],
+            'email' => ['required','string','lowercase','email','max:255','unique:'.User::class],
+            'country_code' => ['required','string','in:+380,+359,+7,+49,+1'],
+            'phone' => ['required','string','max:32', 'unique:users,phone'],
+            'password' => ['required','confirmed', Rules\Password::defaults()],
         ]);
+
+        $digits = preg_replace('/\D+/', '', (string)$request->phone); // только цифры
+        $code = (string)$request->country_code; // "+380" etc.
+        $e164 = $code . $digits;                // "+380672811633"
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $e164,
             'password' => Hash::make($request->password),
+            'locale' => session('locale', config('app.locale')),
         ]);
 
         event(new Registered($user));

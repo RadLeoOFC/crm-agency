@@ -24,6 +24,7 @@ class User extends Authenticatable implements HasLocalePreference
         'email',
         'telegram_chat_id',
         'password',
+        'phone',
         'locale',
     ];
 

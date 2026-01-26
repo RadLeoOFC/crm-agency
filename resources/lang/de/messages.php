@@ -466,4 +466,14 @@ return [
     'confirm' => 'Bestätigen',
     'forgot_password_text' => 'Passwort vergessen? Kein Problem. Geben Sie einfach Ihre E-Mail-Adresse ein, und wir senden Ihnen einen Link zum Zurücksetzen des Passworts.',
     'send_reset_link' => 'Link zum Zurücksetzen senden',
+    'country_code' => 'Ländervorwahl',
+    'phone_number' => 'Telefonnummer',
+
+
+    'telegram' => [
+        'connect_title'  => 'Telegram verbinden',
+        'connect_text'   => 'Um Benachrichtigungen zu erhalten, verbinden Sie Telegram: Öffnen Sie den Bot, tippen Sie auf Start und teilen Sie anschließend Ihren Kontakt.',
+        'connect_button' => 'Telegram verbinden',
+    ],
+
 ];
