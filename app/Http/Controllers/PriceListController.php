@@ -114,7 +114,7 @@ class PriceListController extends Controller
 
         return redirect()
             ->route('pricelists.show', $pricelist)
-            ->with(__('messages.pricelists.messages.generated_slots', ['count' => $created]));
+            ->with('success', __('messages.pricelists.messages.generated_slots', ['count' => $created]));
     }
 
 }

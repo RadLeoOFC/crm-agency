@@ -9,16 +9,21 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PriceListController;
 use App\Http\Controllers\PriceListRuleController;
 use App\Http\Controllers\PriceOverrideController;
-use App\Http\Controllers\PromocodeController;
+use App\Http\Controllers\PromoCodeController;
 use App\Http\Controllers\SlotController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\LanguageSwitchController;
+use App\Http\Controllers\TelegramWebhookController;
 use App\Models\Language;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::post('/telegram/webhook/{secret}', [TelegramWebhookController::class, 'handle'])
+    ->name('telegram.webhook');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -300,8 +305,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware('permission:languages.delete')
         ->name('languages.destroy');
 
-
-
+    Route::get('/help', fn () => view('user_guide'))->name('help.user');
 
 });
 
