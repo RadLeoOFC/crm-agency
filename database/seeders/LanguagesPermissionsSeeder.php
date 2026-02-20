@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use Illuminate\Database\Seeder;
 
 class LanguagesPermissionsSeeder extends Seeder
 {
@@ -22,12 +22,12 @@ class LanguagesPermissionsSeeder extends Seeder
             'languages.delete' => 'Delete languages',
         ];
 
-        foreach ($permissions as $name => $description) {
-            Permission::create(['name' => $name, 'guard_name' => 'web']);
+        foreach ($permissions as $permission) {
+            Permission::findOrCreate($permission);
         }
 
         // Assign permissions to admin role
         $adminRole = Role::findByName('admin');
-        $admin->givePermissionTo(Permission::all());
+        $adminRole->givePermissionTo($permissions);
     }
 }
