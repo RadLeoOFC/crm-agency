@@ -16,10 +16,10 @@ class LanguagesPermissionsSeeder extends Seeder
 
         $permissions = [
             // Create languages permissions
-            'languages.view' => 'View languages',
-            'languages.create' => 'Create languages',
-            'languages.edit' => 'Edit languages',
-            'languages.delete' => 'Delete languages',
+            'languages.view',
+            'languages.create',
+            'languages.edit',
+            'languages.delete',
         ];
 
         foreach ($permissions as $permission) {
