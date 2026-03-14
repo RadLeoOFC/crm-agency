@@ -107,6 +107,11 @@ return [
             'icon' => 'fas fa-fw fa-ticket-alt'
         ],
         [
+            'text' => 'Promo Redemptions',
+            'url'  => 'promoredemptions',
+            'icon' => 'fas fa-fw fa-gift'
+        ],
+        [
             'text' => 'Slots',
             'url'  => 'slots',
             'icon' => 'fas fa-fw fa-clock'

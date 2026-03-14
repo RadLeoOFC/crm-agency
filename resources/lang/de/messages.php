@@ -203,6 +203,37 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Promoredemptions
+    |--------------------------------------------------------------------------
+    */
+    'promoredemptions' => [
+        'title' => 'Promocode-Aktivierungen',
+        'title_edit' => 'Promocode-Aktivierung bearbeiten',
+        'title_create' => 'Promocode-Aktivierung erstellen',
+        'update_button' => 'Promocode-Aktivierung aktualisieren',
+        'create_button' => 'Promocode-Aktivierung erstellen',
+
+        'fields' => [
+            'promocode' => 'Promocode',
+            'client' => 'Kunde',
+            'booking' => 'Buchung',
+            'discount_amount' => 'Rabattbetrag',
+            'used_at' => 'Verwendet am',
+            'promocode_select' => 'Promocode auswählen',
+            'client_select' => 'Kunden auswählen',
+            'booking_select' => 'Buchung auswählen',
+        ],
+
+        'messages' => [
+            'created' => 'Promocode-Aktivierung wurde erfolgreich erstellt.',
+            'updated' => 'Promocode-Aktivierung wurde erfolgreich aktualisiert.',
+            'deleted' => 'Promocode-Aktivierung wurde erfolgreich gelöscht.',
+        ],
+
+        'confirm_delete' => 'Promocode-Aktivierung löschen?',
+    ],
+    /*
+    |--------------------------------------------------------------------------
     | Slots
     |--------------------------------------------------------------------------
     */

@@ -14,6 +14,7 @@ use App\Http\Controllers\SlotController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\LanguageSwitchController;
 use App\Http\Controllers\TelegramWebhookController;
+use App\Http\Controllers\PromoRedemptionController;
 use App\Models\Language;
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +66,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     Route::middleware('permission:promocodes.create')->group(function () {
         Route::get('promocodes/create', [PromocodeController::class, 'create'])->name('promocodes.create');
+    });
+    Route::middleware('permission:promoredemptions.create')->group(function () {
+        Route::get('promoredemptions/create', [PromoRedemptionController::class, 'create'])->name('promoredemptions.create');
     });
     Route::middleware('permission:slots.create')->group(function () {
         Route::get('slots/create', [SlotController::class, 'create'])->name('slots.create');
@@ -284,6 +288,28 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('slots/{slot}', [SlotController::class, 'destroy'])
         ->middleware('permission:slots.delete')
         ->name('slots.destroy');
+
+        
+    // Promo Redemptions management
+    Route::middleware('permission:promoredemptions.view')->group(function () {
+        Route::get('promoredemptions', [PromoRedemptionController::class, 'index'])->name('promoredemptions.index');
+        Route::get('promoredemptions/{promoredemption}', [PromoRedemptionController::class, 'show'])->name('promoredemptions.show');
+    });
+
+    Route::middleware('permission:promoredemptions.create')->group(function () {
+        Route::get('promoredemptions/create', [PromoRedemptionController::class, 'create'])->name('promoredemptions.create');
+        Route::post('promoredemptions', [PromoRedemptionController::class, 'store'])->name('promoredemptions.store');
+    });
+
+    Route::middleware('permission:promoredemptions.edit')->group(function () {
+        Route::get('promoredemptions/{promoredemption}/edit', [PromoRedemptionController::class, 'edit'])->name('promoredemptions.edit');
+        Route::put('promoredemptions/{promoredemption}', [PromoRedemptionController::class, 'update'])->name('promoredemptions.update');
+    });
+
+    Route::delete('promoredemptions/{promoredemption}', [PromoRedemptionController::class, 'destroy'])
+        ->middleware('permission:promoredemptions.delete')
+        ->name('promoredemptions.destroy');
+
 
     // Languages management
     Route::middleware('permission:languages.view')->group(function () {

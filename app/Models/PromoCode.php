@@ -23,8 +23,23 @@ class PromoCode extends Model
         'is_stackable',
     ];
 
+    public function priceLists()
+    {
+        return $this->belongsTo(PriceList::class);
+    }
+
+    public function platforms()
+    {
+        return $this->belongsTo(Platform::class);
+    }
+
     public function redemptions()
     { 
         return $this->hasMany(PromoRedemption::class); 
+    }
+
+    public function bookings()
+    { 
+        return $this->hasMany(Booking::class); 
     }
 }

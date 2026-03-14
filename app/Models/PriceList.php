@@ -22,4 +22,9 @@ class PriceList extends Model
     { 
         return $this->hasMany(PriceOverride::class);
     }
+
+    public function promocode()
+    {
+        return $this->hasMany(PromoCode::class);
+    }
 }

@@ -200,6 +200,40 @@ return [
         'confirm_delete' => 'Delete promocode?',
     ],
 
+
+        /*
+    |--------------------------------------------------------------------------
+    | Promoredemptions
+    |--------------------------------------------------------------------------
+    */
+    'promoredemptions' => [
+        'title' => 'Promo redemptions',
+        'title_edit' => 'Edit Promoredemption',
+        'title_create' => 'Create Promoredemption',
+        'update_button' => 'Update Promoredemption',
+        'create_button' => 'Create Promoredemption',
+
+        'fields' => [
+            'promocode' => 'Promocode',
+            'client' => 'Client',
+            'booking' => 'Booking',
+            'discount_amount' => 'Discount amount',
+            'used_at' => 'Used at',
+            'promocode_select' => 'Select promocode',
+            'client_select' => 'Select client',
+            'booking_select' => 'Select booking',
+        ],
+
+        'messages' => [
+            'created' => 'Promoredemption created successfully.',
+            'updated' => 'Promoredemption updated successfully.',
+            'deleted' => 'Promoredemption deleted successfully.',
+        ],
+
+
+        'confirm_delete' => 'Delete promoredemption?',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Slots

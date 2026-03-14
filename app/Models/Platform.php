@@ -39,4 +39,9 @@ class Platform extends Model
         return $this->hasMany(Booking::class);
     }
 
+    public function promocode()
+    {
+        return $this->hasMany(PromoCode::class);
+    }
+
 }
