@@ -131,5 +131,27 @@ return [
             'url'  => 'profile',
             'icon' => 'fas fa-fw fa-user',
         ],
+
+        [
+            'text' => 'Services',
+            'icon' => 'fas fa-fw fa-solid fa-wrench',
+            'submenu' => [
+                [
+                    'text' => 'Services',
+                    'url'  => 'services',
+                    'icon' => 'fas fa-fw fa-solid fa-wrench',
+                ],
+                [
+                    'text' => 'Orders',
+                    'url'  => 'orders',
+                    'icon' => 'fas fa-fw fa-solid fa-phone',
+                ],
+                [
+                    'text' => 'Orders items',
+                    'url'  => 'orderitems',
+                    'icon' => 'fas fa-fw fa-utility-fill fa-semibold fa-box',
+                ],
+            ],
+        ],
     ],
 ];

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             UsersSeeder::class,
             LanguagesPermissionsSeeder::class,
             PromoRedemptionsPermissionsSeeder::class,
+            ServicesAndOrdersPermissionsSeeder::class,
             LanguagesSeeder::class,
         ]);
     }

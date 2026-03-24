@@ -15,6 +15,9 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\LanguageSwitchController;
 use App\Http\Controllers\TelegramWebhookController;
 use App\Http\Controllers\PromoRedemptionController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderItemController;
 use App\Models\Language;
 use Illuminate\Support\Facades\Route;
 
@@ -76,6 +79,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('permission:languages.create')->group(function () {
         Route::get('languages/create', [LanguageController::class, 'create'])->name('languages.create');
     });
+    Route::middleware('permission:services.create')->group(function () {
+        Route::get('services/create', [ServiceController::class, 'create'])->name('services.create');
+    });
+    Route::middleware('permission:orders.create')->group(function () {
+        Route::get('orders/create', [OrderController::class, 'create'])->name('orders.create');
+    });
+    Route::middleware('permission:orderitems.create')->group(function () {
+        Route::get('orderitems/create', [OrderItemController::class, 'create'])->name('orderitems.create');
+    });
+
 
 
     // Platforms management
@@ -309,6 +322,66 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('promoredemptions/{promoredemption}', [PromoRedemptionController::class, 'destroy'])
         ->middleware('permission:promoredemptions.delete')
         ->name('promoredemptions.destroy');
+
+    // Services management
+    Route::middleware('permission:services.view')->group(function () {
+        Route::get('services', [ServiceController::class, 'index'])->name('services.index');
+        Route::get('services/{service}', [ServiceController::class, 'show'])->name('services.show');
+    });
+
+    Route::middleware('permission:services.create')->group(function () {
+        Route::get('services/create', [ServiceController::class, 'create'])->name('services.create');
+        Route::post('services', [ServiceController::class, 'store'])->name('services.store');
+    });
+
+    Route::middleware('permission:services.edit')->group(function () {
+        Route::get('services/{service}/edit', [ServiceController::class, 'edit'])->name('services.edit');
+        Route::put('services/{service}', [ServiceController::class, 'update'])->name('services.update');
+    });
+
+    Route::delete('services/{service}', [ServiceController::class, 'destroy'])
+        ->middleware('permission:services.delete')
+        ->name('services.destroy');
+
+    // Orders management
+    Route::middleware('permission:orders.view')->group(function () {
+        Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    });
+
+    Route::middleware('permission:orders.create')->group(function () {
+        Route::get('orders/create', [OrderController::class, 'create'])->name('orders.create');
+        Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
+    });
+
+    Route::middleware('permission:orders.edit')->group(function () {
+        Route::get('orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+        Route::put('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+    });
+
+    Route::delete('orders/{order}', [OrderController::class, 'destroy'])
+        ->middleware('permission:orders.delete')
+        ->name('orders.destroy');
+
+    // Order items management
+    Route::middleware('permission:orderitems.view')->group(function () {
+        Route::get('orderitems', [OrderItemController::class, 'index'])->name('orderitems.index');
+        Route::get('orderitems/{orderitem}', [OrderItemController::class, 'show'])->name('orderitems.show');
+    });
+
+    Route::middleware('permission:orderitems.create')->group(function () {
+        Route::get('orderitems/create', [OrderItemController::class, 'create'])->name('orderitems.create');
+        Route::post('orderitems', [OrderItemController::class, 'store'])->name('orderitems.store');
+    });
+
+    Route::middleware('permission:orderitems.edit')->group(function () {
+        Route::get('orderitems/{orderitem}/edit', [OrderItemController::class, 'edit'])->name('orderitems.edit');
+        Route::put('orderitems/{orderitem}', [OrderItemController::class, 'update'])->name('orderitems.update');
+    });
+
+    Route::delete('orders/{orderitem}', [OrderItemController::class, 'destroy'])
+        ->middleware('permission:orderitems.delete')
+        ->name('orderitems.destroy');  
 
 
     // Languages management
