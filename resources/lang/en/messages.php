@@ -150,6 +150,107 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Services
+    |--------------------------------------------------------------------------
+    */
+    'services' => [
+        'title' => 'Services',
+        'title_edit' => 'Edit Service',
+        'title_create' => 'Add New Service',
+        'add' => 'Add service',
+        'update_button' => 'Update service',
+        'create_button' => 'Create service',
+
+        'fields' => [
+            'code' => 'Code',
+            'name' => 'Name',
+            'description' => 'Description',
+            'base_price' => 'Base price',
+            'currency' => 'Currency',
+            'active' => 'Active',
+        ],
+
+        'messages' => [
+            'created' => 'Service created successfully.',
+            'updated' => 'Service updated successfully.',
+            'deleted' => 'Service deleted successfully.',
+        ],
+
+        'confirm_delete' => 'Are you sure you want to delete this service?',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Orders
+    |--------------------------------------------------------------------------
+    */
+    'orders' => [
+        'title' => 'Orders',
+        'title_edit' => 'Edit Order',
+        'title_create' => 'Add New Order',
+        'add' => 'Add order',
+        'update_button' => 'Update order',
+        'create_button' => 'Create order',
+
+        'fields' => [
+            'client' => 'Client',
+            'manager' => 'Manager',
+            'status' => 'Status',
+            'total_amount' => 'Total amount',
+            'client_select' => 'Select client',
+            'manager_select' => 'Select manager',
+        ],
+
+        'statuses' => [
+            'new' => 'New',
+            'in_progress' => 'In progress',
+            'completed' => 'Completed',
+            'cancelled' => 'Cancelled',
+        ],
+
+        'messages' => [
+            'created' => 'Order created successfully.',
+            'updated' => 'Order updated successfully.',
+            'deleted' => 'Order deleted successfully.',
+        ],
+
+        'confirm_delete' => 'Are you sure you want to delete this order?',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Order Items
+    |--------------------------------------------------------------------------
+    */
+    'orderitems' => [
+        'title' => 'Order items',
+        'title_edit' => 'Edit Order item',
+        'title_create' => 'Add New Order item',
+        'add' => 'Add order item',
+        'update_button' => 'Update order item',
+        'create_button' => 'Create order item',
+
+        'fields' => [
+            'order' => 'Order',
+            'service' => 'Service',
+            'qty' => 'Quantity',
+            'price' => 'Price',
+            'subtotal' => 'Subtotal',
+            'order_select' => 'Select order',
+            'service_select' => 'Select service',
+        ],
+
+        'messages' => [
+            'created' => 'Order item created successfully.',
+            'updated' => 'Order item updated successfully.',
+            'deleted' => 'Order item deleted successfully.',
+        ],
+
+        'confirm_delete' => 'Are you sure you want to delete this order item?',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Promocodes
     |--------------------------------------------------------------------------
     */

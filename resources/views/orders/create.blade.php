@@ -1,15 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Create Order')
+@section('title', __('messages.orders.title_create'))
 
 @section('content_header')
-    <h1>Create order</h1>
+    <h1>{{ __('messages.orders.title_create') }}</h1>
 @stop
 
 @section('content')
     <form action="{{ route('orders.store')}}" method="POST">
         @csrf
-        @include('orders._form', ['submitButtonText' => __('messages.save')])
+        @include('orders._form', ['submitButtonText' => __('messages.orders.create_button')])
     </form>
 @stop
 

@@ -1,16 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit Service')
+@section('title', __('messages.services.title_edit'))
 
 @section('content_header')
-    <h1>Create service</h1>
+    <h1>{{ __('messages.services.title_edit') }}</h1>
 @stop
 
 @section('content')
     <form action="{{ route('services.update', $service)}}" method="POST">
         @csrf
         @method('PUT')
-        @include('services._form', ['submitButtonText' => 'Update'])
+        @include('services._form', ['submitButtonText' => __('messages.services.update_button')])
     </form>
 @stop
 

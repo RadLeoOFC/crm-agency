@@ -10,9 +10,9 @@
     @endif
 
     <div class="mb-3">
-        <label for="order_id" class="form-label">Order</label>
+        <label for="order_id" class="form-label">{{ __('messages.orderitems.fields.order') }}</label>
         <select name="order_id" id="order_id" class="form-select" required>
-            <option value="">Select order</option>
+            <option value="">{{ __('messages.orderitems.fields.order_select') }}</option>
             @foreach($orders as $order)
                 <option value="{{ $order->id }}" @selected(old('order_id', $orderitem->order_id ?? '') == $order->id)>
                     {{ $order->id }}
@@ -22,9 +22,9 @@
     </div>
 
     <div class="mb-3">
-        <label for="service_id" class="form-label">Service</label>
+        <label for="service_id" class="form-label">{{ __('messages.orderitems.fields.service') }}</label>
         <select name="service_id" id="service_id" class="form-select" required>
-            <option value="">Select service</option>
+            <option value="">{{ __('messages.orderitems.fields.service_select') }}</option>
             @foreach($services as $service)
                 <option value="{{ $service->id }}" @selected(old('service_id', $orderitem->service_id ?? '') == $service->id)>
                     {{ $service->name }}
@@ -35,7 +35,7 @@
 
     <div class="row" id="qty">
         <div class="col-md-3 mb-3">
-            <label class="form-label">Qty</label>
+            <label class="form-label">{{ __('messages.orderitems.fields.qty') }}</label>
             <input name="qty" type="number" step="1" min="0" class="form-control"
                    value="{{ old('qty', $orderitem->qty ?? '') }}">
         </div>
@@ -43,7 +43,7 @@
 
     <div class="row" id="price">
         <div class="col-md-3 mb-3">
-            <label class="form-label">Price</label>
+            <label class="form-label">{{ __('messages.orderitems.fields.price') }}</label>
             <input name="price" type="number" step="0.01" min="0" class="form-control"
                    value="{{ old('price', $orderitem->price ?? '') }}">
         </div>
@@ -51,13 +51,13 @@
 
     <div class="row" id="subtotal">
         <div class="col-md-3 mb-3">
-            <label class="form-label">Subtotal</label>
+            <label class="form-label">{{ __('messages.orderitems.fields.subtotal') }}</label>
             <input name="subtotal" type="number" step="0.01" min="0" class="form-control"
                    value="{{ old('subtotal', $orderitem->subtotal ?? '') }}">
         </div>
     </div>
 
     <button class="btn btn-success">{{ $submitButtonText }}</button>
-    <a href="{{ route('orderitems.index') }}" class="btn btn-secondary">Cancel</a>
+    <a href="{{ route('orderitems.index') }}" class="btn btn-secondary">{{ __('messages.cancel') }}</a>
 
 </div>

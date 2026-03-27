@@ -151,6 +151,107 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Services
+    |--------------------------------------------------------------------------
+    */
+    'services' => [
+        'title' => 'Leistungen',
+        'title_edit' => 'Leistung bearbeiten',
+        'title_create' => 'Neue Leistung hinzufügen',
+        'add' => 'Leistung hinzufügen',
+        'update_button' => 'Leistung aktualisieren',
+        'create_button' => 'Leistung erstellen',
+
+        'fields' => [
+            'code' => 'Code',
+            'name' => 'Name',
+            'description' => 'Beschreibung',
+            'base_price' => 'Grundpreis',
+            'currency' => 'Währung',
+            'active' => 'Aktiv',
+        ],
+
+        'messages' => [
+            'created' => 'Leistung erfolgreich erstellt.',
+            'updated' => 'Leistung erfolgreich aktualisiert.',
+            'deleted' => 'Leistung erfolgreich gelöscht.',
+        ],
+
+        'confirm_delete' => 'Möchten Sie diese Leistung wirklich löschen?',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Orders
+    |--------------------------------------------------------------------------
+    */
+    'orders' => [
+        'title' => 'Aufträge',
+        'title_edit' => 'Auftrag bearbeiten',
+        'title_create' => 'Neuen Auftrag hinzufügen',
+        'add' => 'Auftrag hinzufügen',
+        'update_button' => 'Auftrag aktualisieren',
+        'create_button' => 'Auftrag erstellen',
+
+        'fields' => [
+            'client' => 'Kunde',
+            'manager' => 'Manager',
+            'status' => 'Status',
+            'total_amount' => 'Gesamtbetrag',
+            'client_select' => 'Kunden auswählen',
+            'manager_select' => 'Manager auswählen',
+        ],
+
+        'statuses' => [
+            'new' => 'Neu',
+            'in_progress' => 'In Bearbeitung',
+            'completed' => 'Abgeschlossen',
+            'cancelled' => 'Storniert',
+        ],
+
+        'messages' => [
+            'created' => 'Auftrag erfolgreich erstellt.',
+            'updated' => 'Auftrag erfolgreich aktualisiert.',
+            'deleted' => 'Auftrag erfolgreich gelöscht.',
+        ],
+
+        'confirm_delete' => 'Möchten Sie diesen Auftrag wirklich löschen?',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Order Items
+    |--------------------------------------------------------------------------
+    */
+    'orderitems' => [
+        'title' => 'Auftragspositionen',
+        'title_edit' => 'Auftragsposition bearbeiten',
+        'title_create' => 'Neue Auftragsposition hinzufügen',
+        'add' => 'Auftragsposition hinzufügen',
+        'update_button' => 'Auftragsposition aktualisieren',
+        'create_button' => 'Auftragsposition erstellen',
+
+        'fields' => [
+            'order' => 'Auftrag',
+            'service' => 'Leistung',
+            'qty' => 'Menge',
+            'price' => 'Preis',
+            'subtotal' => 'Zwischensumme',
+            'order_select' => 'Auftrag auswählen',
+            'service_select' => 'Leistung auswählen',
+        ],
+
+        'messages' => [
+            'created' => 'Auftragsposition erfolgreich erstellt.',
+            'updated' => 'Auftragsposition erfolgreich aktualisiert.',
+            'deleted' => 'Auftragsposition erfolgreich gelöscht.',
+        ],
+
+        'confirm_delete' => 'Möchten Sie diese Auftragsposition wirklich löschen?',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Promocodes
     |--------------------------------------------------------------------------
     */
