@@ -1,19 +1,19 @@
 @extends('adminlte::page')
 
-@section('title', 'Orders')
+@section('title', __('messages.orders.title'))
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h1>Orders</h1>
-  <a href="{{ route('orders.create') }}" class="btn btn-primary">Create new order</a>
+  <h1>{{ __('messages.orders.title') }}</h1>
+  <a href="{{ route('orders.create') }}" class="btn btn-primary">{{ __('messages.orders.add') }}</a>
 </div>
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Client</th>
-      <th>Manager</th>
-      <th>Status</th>
-      <th>Total anount</th>
+      <th>{{ __('messages.orders.fields.client') }}</th>
+      <th>{{ __('messages.orders.fields.manager') }}</th>
+      <th>{{ __('messages.orders.fields.status') }}</th>
+      <th>{{ __('messages.orders.fields.total_amount') }}</th>
       <th class="text-end">{{ __('messages.actions') }}</th>
     </tr>
   </thead>
@@ -32,7 +32,7 @@
             <form action="{{ route('orders.destroy', $order) }}" method="POST" class="d-inline">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ __('messages.orders.confirm_delete') }}')">
                     <i class="fas fa-trash"></i>
                 </button>
             </form>
