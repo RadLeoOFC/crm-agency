@@ -14,25 +14,20 @@ class OrderItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Order $order)
     {
-        $query = OrderItem::with(['order','service']);
-        // Only show own documents if not admin/manager
-        if (!Auth::user()->hasRole(['admin', 'manager'])) {
-            $query->where('user_id', Auth::id());
-        }
-        $orderitems = $query->latest()->paginate(10);
-        return view('orderitems.index', compact('orderitems'));
+        $orderitems = $order->order_item()->orderBy('service_id')->orderBy('qty')->get();
+        return view('orderitems.index', compact('order', 'orderitems'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Order $order)
     {
         return view('orderitems.create', [
-            'orderitems'   => new OrderItem(),
-            'orders'   => Order::orderBy('id')->get(),
+            'order'   => $order,
+            'orderitem' => new OrderItem(),
             'services' => Service::orderBy('name')->get(),
         ]);
     }
@@ -40,10 +35,9 @@ class OrderItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Order $order)
     {
         $validated = $request->validate([
-            'order_id' => ['required','exists:orders,id'],
             'service_id' => ['required','exists:services,id'],
             'qty' => ['required','integer','min:1'],
             'price' => ['required','numeric','min:0'],
@@ -52,7 +46,7 @@ class OrderItemController extends Controller
 
         $orderitem = OrderItem::create($validated);
 
-        return redirect()->route('orderitems.index')->with('success', 'Order item created successfull');
+        return redirect()->route('orderitems.index', $order)->with('success', 'Order item created successfull');
     }
 
     /**
@@ -66,11 +60,11 @@ class OrderItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(OrderItem $orderitem)
+    public function edit(Order $order, OrderItem $orderitem)
     {
         return view('orderitems.edit', [
+            'order'   => $order,
             'orderitem'   => $orderitem->load(['order','service']),
-            'orders'   => Order::orderBy('id')->get(),
             'services' => Service::orderBy('name')->get(),
         ]);
     }
@@ -78,10 +72,9 @@ class OrderItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, OrderItem $orderitem)
+    public function update(Request $request, Order $order, OrderItem $orderitem)
     {
         $validated = $request->validate([
-            'order_id' => ['required','exists:orders,id'],
             'service_id' => ['required','exists:services,id'],
             'qty' => ['required','integer','min:1'],
             'price' => ['required','numeric','min:0'],
@@ -90,13 +83,13 @@ class OrderItemController extends Controller
 
         $orderitem->update($validated);
 
-        return redirect()->route('orderitems.index')->with('success', 'Order item updated successfull');
+        return redirect()->route('orderitems.index', $order)->with('success', 'Order item updated successfull');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(OrderItem $orderitem)
+    public function destroy(Order $order, OrderItem $orderitem)
     {
         $orderitem->delete();
         return redirect()->route('orderitems.index')->with('success', 'Order item deleted successfull');

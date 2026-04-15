@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <form action="{{ route('orderitems.update', $orderitem)}}" method="POST">
+    <form action="{{ route('orderitems.update', [$order, $orderitem])}}" method="POST">
         @csrf
         @method('PUT')
         @include('orderitems._form', ['submitButtonText' => __('messages.orderitems.update_button')])

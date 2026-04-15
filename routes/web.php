@@ -365,21 +365,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Order items management
     Route::middleware('permission:orderitems.view')->group(function () {
-        Route::get('orderitems', [OrderItemController::class, 'index'])->name('orderitems.index');
-        Route::get('orderitems/{orderitem}', [OrderItemController::class, 'show'])->name('orderitems.show');
+        Route::get('orders/{order}/orderitems', [OrderItemController::class, 'index'])->name('orderitems.index');
+        Route::get('orders/{order}/orderitems/{orderitem}', [OrderItemController::class, 'show'])->name('orderitems.show');
     });
 
     Route::middleware('permission:orderitems.create')->group(function () {
-        Route::get('orderitems/create', [OrderItemController::class, 'create'])->name('orderitems.create');
-        Route::post('orderitems', [OrderItemController::class, 'store'])->name('orderitems.store');
+        Route::get('orders/{order}/orderitems/create', [OrderItemController::class, 'create'])->name('orderitems.create');
+        Route::post('orders/{order}/orderitems', [OrderItemController::class, 'store'])->name('orderitems.store');
     });
 
     Route::middleware('permission:orderitems.edit')->group(function () {
-        Route::get('orderitems/{orderitem}/edit', [OrderItemController::class, 'edit'])->name('orderitems.edit');
-        Route::put('orderitems/{orderitem}', [OrderItemController::class, 'update'])->name('orderitems.update');
+        Route::get('orders/{order}/orderitems/{orderitem}/edit', [OrderItemController::class, 'edit'])->name('orderitems.edit');
+        Route::put('orders/{order}/orderitems/{orderitem}', [OrderItemController::class, 'update'])->name('orderitems.update');
     });
 
-    Route::delete('orders/{orderitem}', [OrderItemController::class, 'destroy'])
+    Route::delete('orders/{order}/orderitems/{orderitem}', [OrderItemController::class, 'destroy'])
         ->middleware('permission:orderitems.delete')
         ->name('orderitems.destroy');  
 
