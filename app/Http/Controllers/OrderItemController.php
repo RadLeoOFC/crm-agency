@@ -44,7 +44,7 @@ class OrderItemController extends Controller
             'subtotal' => ['required','numeric','min:0'],
         ]);
 
-        $orderitem = OrderItem::create($validated);
+        $order->order_item()->create($validated);
 
         return redirect()->route('orderitems.index', $order)->with('success', 'Order item created successfull');
     }
@@ -92,6 +92,6 @@ class OrderItemController extends Controller
     public function destroy(Order $order, OrderItem $orderitem)
     {
         $orderitem->delete();
-        return redirect()->route('orderitems.index')->with('success', 'Order item deleted successfull');
+        return redirect()->route('orderitems.index', $order)->with('success', 'Order item deleted successfull');
     }
 }

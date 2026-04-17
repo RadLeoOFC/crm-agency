@@ -10,7 +10,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>{{ __('messages.orderitems.fields.order') }}</th>
       <th>{{ __('messages.orderitems.fields.service') }}</th>
       <th>{{ __('messages.orderitems.fields.qty') }}</th>
       <th>{{ __('messages.orderitems.fields.price') }}</th>
@@ -21,7 +20,6 @@
   <tbody>
   @foreach($orderitems as $orderitem)
     <tr>
-      <td>{{ $orderitem->order->id}}</td>
       <td>{{ $orderitem->service->name }}</td>
       <td>{{ $orderitem->qty}}</td>
       <td>{{ $orderitem->price}}</td>

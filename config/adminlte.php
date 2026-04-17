@@ -144,12 +144,7 @@ return [
                 [
                     'text' => 'Orders',
                     'url'  => 'orders',
-                    'icon' => 'fas fa-fw fa-solid fa-phone',
-                ],
-                [
-                    'text' => 'Orders items',
-                    'url'  => 'orderitems',
-                    'icon' => 'fas fa-fw fa-utility-fill fa-semibold fa-box',
+                    'icon' => 'fas fa-fw fa-utility-fill fa-semibold fa-box'
                 ],
             ],
         ],

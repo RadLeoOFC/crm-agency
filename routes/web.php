@@ -13,7 +13,6 @@ use App\Http\Controllers\PromoCodeController;
 use App\Http\Controllers\SlotController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\LanguageSwitchController;
-use App\Http\Controllers\TelegramWebhookController;
 use App\Http\Controllers\PromoRedemptionController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\OrderController;
@@ -24,10 +23,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-
-Route::post('/telegram/webhook/{secret}', [TelegramWebhookController::class, 'handle'])
-    ->name('telegram.webhook');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -62,10 +57,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('pricelists/create', [PriceListController::class, 'create'])->name('pricelists.create');
     });
     Route::middleware('permission:pricerules.create')->group(function () {
-        Route::get('pricerules/create', [PriceListRuleController::class, 'create'])->name('pricerules.create');
+        Route::get('pricelists/{pricelist}/pricerules/create', [PriceListRuleController::class, 'create'])->name('pricerules.create');
     });
     Route::middleware('permission:priceoverrides.create')->group(function () {
-        Route::get('priceoverrides/create', [PriceOverrideController::class, 'create'])->name('priceoverrides.create');
+        Route::get('pricelists/{pricelist}/priceoverrides/create', [PriceOverrideController::class, 'create'])->name('priceoverrides.create');
     });
     Route::middleware('permission:promocodes.create')->group(function () {
         Route::get('promocodes/create', [PromocodeController::class, 'create'])->name('promocodes.create');
@@ -86,11 +81,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('orders/create', [OrderController::class, 'create'])->name('orders.create');
     });
     Route::middleware('permission:orderitems.create')->group(function () {
-        Route::get('orderitems/create', [OrderItemController::class, 'create'])->name('orderitems.create');
+        Route::get('orders/{order}/orderitems/create', [OrderItemController::class, 'create'])->name('orderitems.create');
     });
-
-
-
     // Platforms management
     Route::middleware('permission:platforms.view')->group(function () {
         Route::get('platforms', [PlatformController::class, 'index'])->name('platforms.index');
