@@ -55,4 +55,11 @@
     <button class="btn btn-success">{{ $submitButtonText }}</button>
     <a href="{{ route('orders.index') }}" class="btn btn-secondary">{{ __('messages.cancel') }}</a>
 
+    @if(!empty($order) && $order->id)
+        <hr>
+        <div class="d-flex gap-2">
+            <a class="btn btn-outline-primary" href="{{ route('orderitems.index',$order) }}">{{ __('messages.orders.links.orderitems') }}</a>
+        </div>
+    @endif
+
 </div>

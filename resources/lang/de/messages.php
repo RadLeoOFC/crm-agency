@@ -215,6 +215,10 @@ return [
             'deleted' => 'Auftrag erfolgreich gelöscht.',
         ],
 
+        'links' => [
+            'orderitems' => 'Auftragspositionen',
+        ],
+
         'confirm_delete' => 'Möchten Sie diesen Auftrag wirklich löschen?',
     ],
 

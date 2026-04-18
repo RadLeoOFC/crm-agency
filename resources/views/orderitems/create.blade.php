@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <form action="{{ route('orderitems.store')}}" method="POST">
+    <form action="{{ route('orderitems.store', $order) }}" method="POST">
         @csrf
         @include('orderitems._form', ['submitButtonText' => __('messages.orderitems.create_button')])
     </form>
@@ -16,3 +16,4 @@
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
 @stop
+

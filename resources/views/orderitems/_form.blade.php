@@ -1,4 +1,8 @@
 <div class="card">
+    @php
+        $orderitem = $orderitem ?? null;
+    @endphp
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">
@@ -8,18 +12,6 @@
             </ul>
         </div>
     @endif
-
-    <div class="mb-3">
-        <label for="order_id" class="form-label">{{ __('messages.orderitems.fields.order') }}</label>
-        <select name="order_id" id="order_id" class="form-select" required>
-            <option value="">{{ __('messages.orderitems.fields.order_select') }}</option>
-            @foreach($orders as $order)
-                <option value="{{ $order->id }}" @selected(old('order_id', $orderitem->order_id ?? '') == $order->id)>
-                    {{ $order->id }}
-                </option>
-            @endforeach
-        </select>
-    </div>
 
     <div class="mb-3">
         <label for="service_id" class="form-label">{{ __('messages.orderitems.fields.service') }}</label>
@@ -58,6 +50,6 @@
     </div>
 
     <button class="btn btn-success">{{ $submitButtonText }}</button>
-    <a href="{{ route('orderitems.index') }}" class="btn btn-secondary">{{ __('messages.cancel') }}</a>
+    <a href="{{ route('orderitems.index', $order) }}" class="btn btn-secondary">{{ __('messages.cancel') }}</a>
 
 </div>
