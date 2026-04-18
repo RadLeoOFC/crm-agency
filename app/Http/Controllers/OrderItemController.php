@@ -41,10 +41,16 @@ class OrderItemController extends Controller
             'service_id' => ['required','exists:services,id'],
             'qty' => ['required','integer','min:1'],
             'price' => ['required','numeric','min:0'],
-            'subtotal' => ['required','numeric','min:0'],
         ]);
 
-        $order->order_item()->create($validated);
+        $subtotal = $this->calculateSubtotalPrice($request->qty, $request->price);
+
+        $order->order_item()->create([
+            'service_id' => $request->service_id,
+            'qty' => $request->qty,
+            'price' => $request->price,
+            'subtotal' => $subtotal,
+        ]);
 
         return redirect()->route('orderitems.index', $order)->with('success', 'Order item created successfull');
     }
@@ -78,10 +84,16 @@ class OrderItemController extends Controller
             'service_id' => ['required','exists:services,id'],
             'qty' => ['required','integer','min:1'],
             'price' => ['required','numeric','min:0'],
-            'subtotal' => ['required','numeric','min:0'],
         ]);
 
-        $orderitem->update($validated);
+        $subtotal = $this->calculateSubtotalPrice($request->qty, $request->price);
+
+        $orderitem->update([
+            'service_id' => $request->service_id,
+            'qty' => $request->qty,
+            'price' => $request->price,
+            'subtotal' => $subtotal,
+        ]);
 
         return redirect()->route('orderitems.index', $order)->with('success', 'Order item updated successfull');
     }
@@ -93,5 +105,10 @@ class OrderItemController extends Controller
     {
         $orderitem->delete();
         return redirect()->route('orderitems.index', $order)->with('success', 'Order item deleted successfull');
+    }
+
+    private function calculateSubtotalPrice($qty, $price)
+    {
+        return round($qty * $price);
     }
 }

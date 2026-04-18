@@ -41,14 +41,6 @@
         </div>
     </div>
 
-    <div class="row" id="subtotal">
-        <div class="col-md-3 mb-3">
-            <label class="form-label">{{ __('messages.orderitems.fields.subtotal') }}</label>
-            <input name="subtotal" type="number" step="0.01" min="0" class="form-control"
-                   value="{{ old('subtotal', $orderitem->subtotal ?? '') }}">
-        </div>
-    </div>
-
     <button class="btn btn-success">{{ $submitButtonText }}</button>
     <a href="{{ route('orderitems.index', $order) }}" class="btn btn-secondary">{{ __('messages.cancel') }}</a>
 
