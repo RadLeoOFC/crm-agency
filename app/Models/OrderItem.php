@@ -26,4 +26,20 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Service::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Сработает при создании и обновлении записи
+        static::saved(function ($order_item) {
+            $order_item->order->countTotalAmount();
+        });
+
+        // Сработает при удалении записи
+        static::deleted(function ($order_item) {
+            $order_item->order->countTotalAmount();
+        });
+    }
+
 }

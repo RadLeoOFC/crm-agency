@@ -17,7 +17,7 @@ class OrderController extends Controller
     public function index()
     {
         $query = Order::with('manager');
-        // Only show own documents if not admin/manager
+        // Only show own orders if not admin/manager
         if (!Auth::user()->hasRole(['admin', 'manager'])) {
             $query->where('user_id', Auth::id());
         }
@@ -46,7 +46,6 @@ class OrderController extends Controller
             'client_id' => ['required','exists:clients,id'],
             'manager_id' => ['required','exists:users,id'],
             'status' => ['required','in:new,in_progress,completed,cancelled'],
-            'total_amount' => ['required','numeric','min:0'],
         ]);
 
         $order = Order::create($validated);
@@ -83,7 +82,6 @@ class OrderController extends Controller
             'client_id' => ['required','exists:clients,id'],
             'manager_id' => ['required','exists:users,id'],
             'status' => ['required','in:new,in_progress,completed,cancelled'],
-            'total_amount' => ['required','numeric','min:0'],
         ]);
 
         $order->update($validated);
