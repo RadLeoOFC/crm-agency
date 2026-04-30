@@ -15,7 +15,7 @@ return [
         ],
     'overview' => [
         'p1' => 'Das CRM hilft Agenturen, Anzeigen über mehrere Plattformen (Telegram, YouTube, Facebook, Websites) zu planen, zu bepreisen und zu terminieren.',
-        'p2' => 'Es organisiert Preise in Preislisten und Zeitslots, wendet Regeln und Ausnahmen an, verfolgt Buchungen, Promo-Codes, Kunden, Benutzer, Rollen und Sprachen.'
+        'p2' => 'Es organisiert Preise in Preislisten und Zeitslots, wendet Regeln und Ausnahmen an, verfolgt Buchungen, Promo-Codes, Kunden, Services, Auftraege, Auftragspositionen, Benutzer, Rollen und Sprachen.'
         ],
     'setup' => [
         '1' => 'Plattformen anlegen (z. B. Telegram‑ oder YouTube‑Kanal) mit Währung, Zeitzone und Status.',
@@ -24,7 +24,7 @@ return [
         '4' => 'Preis‑Ausnahmen für bestimmte Daten hinzufügen (Feiertage, Events).',
         '5' => 'Slots aus Regeln/Ausnahmen generieren.',
         '6' => 'Buchungen per Slot oder freiem Zeitraum erstellen; ggf. Promo‑Codes anwenden.',
-        '7' => 'Kunden, Benutzer, Rollen und Sprachen pflegen.'
+        '7' => 'Kunden, Services, Auftraege, Auftragspositionen, Benutzer, Rollen und Sprachen pflegen.'
         ],
     'who_uses' => 'Wer nutzt es:',
     'related' => 'Verwandte Module:',
@@ -152,6 +152,39 @@ return [
                 ],
             'who' => 'Admin verwaltet; alle können umschalten.',
             'related' => 'Alle Module'
+            ],
+        'services' => [
+            'name' => 'Services',
+            'desc' => 'Ein Service ist ein verkaufbares Agenturangebot mit Code, Kategorie, Beschreibung, Basispreis, Waehrung und Aktiv-Status.',
+            'points' => [
+    'Services dienen als wiederverwendbarer Katalog fuer Auftragspositionen.',
+    'Jeder Service hat Basispreis und Waehrung, aber Auftragspositionen koennen einen eigenen Preis speichern.',
+    'Service deaktivieren, um Historie zu behalten und neue Nutzung zu stoppen.'
+                ],
+            'who' => 'Admin/Manager pflegen den Katalog; Buchhalter/Partner/Kunde koennen bei Rechtevergabe lesen.',
+            'related' => 'Auftraege, Auftragspositionen'
+            ],
+        'orders' => [
+            'name' => 'Auftraege',
+            'desc' => 'Auftraege sind die Kopfdatensaetze, die Kunde, verantwortlichen Manager, Workflow-Status und Gesamtsumme verbinden.',
+            'points' => [
+    'Jeder Auftrag gehoert zu genau einem Kunden und einem Manager.',
+    'Die Gesamtsumme wird aus den zugehoerigen Auftragspositionen neu berechnet.',
+    'In der aktuellen Controller-Logik sehen Nicht-Admin/Nicht-Manager nur eigene Auftraege.'
+                ],
+            'who' => 'Admin/Manager verwalten alle Auftraege; Partner/Kunde arbeiten bei Rechtevergabe mit eigenen Auftraegen.',
+            'related' => 'Kunden, Benutzer, Auftragspositionen'
+            ],
+        'orderitems' => [
+            'name' => 'Auftragspositionen',
+            'desc' => 'Auftragspositionen sind einzelne Service-Zeilen in einem Auftrag mit Menge, Einzelpreis und Zwischensumme.',
+            'points' => [
+    'Jede Position verknuepft einen Auftrag mit einem Service.',
+    'Die Zwischensumme wird beim Speichern aus Menge und Preis berechnet.',
+    'Speichern oder Loeschen einer Position aktualisiert automatisch die Auftragssumme.'
+                ],
+            'who' => 'Admin/Manager verwalten alle Positionen; Partner/Kunde arbeiten bei Rechtevergabe mit Positionen in eigenen Auftraegen.',
+            'related' => 'Auftraege, Services'
             ]
         ],
     'role_matrix' => [
@@ -189,7 +222,13 @@ return [
         'booking_def' => 'Reservierung mit berechnetem Endpreis und Status.',
         'promocode_def' => 'Rabattcode, der den Endpreis unter Bedingungen reduziert.',
         'capacity_def' => 'Max. Anzeigen pro Slot; used_capacity zeigt belegte.',
-        'stackable_def' => 'Ob ein Code mit anderen kombinierbar ist.'
+        'stackable_def' => 'Ob ein Code mit anderen kombinierbar ist.',
+        'service' => 'Service',
+        'order' => 'Auftrag',
+        'order_item' => 'Auftragsposition',
+        'service_def' => 'Wiederverwendbares verkaufbares Agenturangebot mit eigenem Code, Basispreis, Waehrung und Aktiv-Status.',
+        'order_def' => 'Uebergeordneter Verkaufsbeleg, der Kunde, verantwortlichen Manager, Status und Gesamtsumme zusammenfasst.',
+        'order_item_def' => 'Eine Service-Zeile in einem Auftrag mit Menge, Einzelpreis und Zwischensumme.'
         ],
     'support' => [
         'p1' => 'Benötigen Sie Hilfe? Kontaktieren Sie Ihren Administrator oder die Wissensdatenbank.',
