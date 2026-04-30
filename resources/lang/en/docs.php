@@ -15,7 +15,7 @@ return [
         ],
     'overview' => [
         'p1' => 'This CRM helps an ad agency plan, price, and schedule ads across multiple platforms (Telegram, YouTube, Facebook, websites).',
-        'p2' => 'It organizes inventory into price lists and time slots, applies rules and overrides, tracks bookings, promo codes, clients, users, roles, and interface languages.'
+        'p2' => 'It organizes inventory into price lists and time slots, applies rules and overrides, tracks bookings, promo codes, clients, services, orders, order items, users, roles, and interface languages.'
         ],
     'setup' => [
         '1' => 'Create Platforms (e.g., a Telegram channel or a YouTube channel) with currency, timezone, and status.',
@@ -24,7 +24,7 @@ return [
         '4' => 'Add Price Overrides for specific dates (holidays, events).',
         '5' => 'Generate Slots from the pricelist rules/overrides.',
         '6' => 'Create Bookings using a slot or a custom time window; apply promo codes if needed.',
-        '7' => 'Manage Clients, Users, Roles, and Languages.'
+        '7' => 'Manage Clients, Services, Orders, Order Items, Users, Roles, and Languages.'
         ],
     'who_uses' => 'Who uses it:',
     'related' => 'Related:',
@@ -152,6 +152,39 @@ return [
                 ],
             'who' => 'Admin manage; all users can switch.',
             'related' => 'All modules'
+            ],
+        'services' => [
+            'name' => 'Services',
+            'desc' => 'A service is a sellable agency offering with a code, category name, description, base price, currency, and active flag.',
+            'points' => [
+    'Use services as reusable catalog items when building order lines.',
+    'Each service stores a base price and currency, but order items can still save a custom per-order price.',
+    'Deactivate a service to keep history while stopping new usage.'
+                ],
+            'who' => 'Admin/Manager maintain the catalog; Accountant/Partner/Client may view if allowed.',
+            'related' => 'Orders, Order Items'
+            ],
+        'orders' => [
+            'name' => 'Orders',
+            'desc' => 'Orders are the commercial header records that connect a client, responsible manager, workflow status, and total amount.',
+            'points' => [
+    'Each order belongs to one client and one manager.',
+    'The total amount is recalculated from the related order items.',
+    'Non-admin and non-manager users only see their own orders in the current controller logic.'
+                ],
+            'who' => 'Admin/Manager manage all orders; Partner/Client can work with their own orders if permissions are granted.',
+            'related' => 'Clients, Users, Order Items'
+            ],
+        'orderitems' => [
+            'name' => 'Order Items',
+            'desc' => 'Order items are the individual service lines inside an order, storing quantity, unit price, and subtotal.',
+            'points' => [
+    'Each item links one order to one service.',
+    'Subtotal is calculated from quantity and price on save.',
+    'Saving or deleting an item automatically refreshes the parent order total.'
+                ],
+            'who' => 'Admin/Manager manage all items; Partner/Client can work with items inside their own orders if permissions are granted.',
+            'related' => 'Orders, Services'
             ]
         ],
     'role_matrix' => [
@@ -189,7 +222,13 @@ return [
         'booking_def' => 'A reservation for a slot/time window with a computed price and status.',
         'promocode_def' => 'A discount code that can reduce the final price based on conditions.',
         'capacity_def' => 'Maximum ads allowed in a slot; used_capacity tracks how many are taken.',
-        'stackable_def' => 'Whether a promo can be combined with other promos.'
+        'stackable_def' => 'Whether a promo can be combined with other promos.',
+        'service' => 'Service',
+        'order' => 'Order',
+        'order_item' => 'Order Item',
+        'service_def' => 'A reusable sellable agency offering with its own code, base price, currency, and active flag.',
+        'order_def' => 'A parent sales document that groups client work, responsible manager, status, and total amount.',
+        'order_item_def' => 'A single service line inside an order with quantity, unit price, and subtotal.'
         ],
     'support' => [
         'p1' => 'Need help? Contact your administrator or check the internal knowledge base.',

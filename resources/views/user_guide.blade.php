@@ -169,7 +169,40 @@
           <li>@lang('docs.modules.languages.points.2')</li>
         </ul>
         <p class="mb-1"><strong>@lang('docs.who_uses')</strong> @lang('docs.modules.languages.who')</p>
-        <p class="mb-0"><strong>@lang('docs.related')</strong> @lang('docs.modules.languages.related')</p>
+        <p class="mb-3"><strong>@lang('docs.related')</strong> @lang('docs.modules.languages.related')</p>
+
+        {{-- Services --}}
+        <h6 class="mt-4">12 {{ __('docs.modules.services.name') }}</h6>
+        <p>@lang('docs.modules.services.desc')</p>
+        <ul>
+          <li>@lang('docs.modules.services.points.0')</li>
+          <li>@lang('docs.modules.services.points.1')</li>
+          <li>@lang('docs.modules.services.points.2')</li>
+        </ul>
+        <p class="mb-1"><strong>@lang('docs.who_uses')</strong> @lang('docs.modules.services.who')</p>
+        <p class="mb-3"><strong>@lang('docs.related')</strong> @lang('docs.modules.services.related')</p>
+
+        {{-- Orders --}}
+        <h6 class="mt-4">13 {{ __('docs.modules.orders.name') }}</h6>
+        <p>@lang('docs.modules.orders.desc')</p>
+        <ul>
+          <li>@lang('docs.modules.orders.points.0')</li>
+          <li>@lang('docs.modules.orders.points.1')</li>
+          <li>@lang('docs.modules.orders.points.2')</li>
+        </ul>
+        <p class="mb-1"><strong>@lang('docs.who_uses')</strong> @lang('docs.modules.orders.who')</p>
+        <p class="mb-3"><strong>@lang('docs.related')</strong> @lang('docs.modules.orders.related')</p>
+
+        {{-- Order Items --}}
+        <h6 class="mt-4">14 {{ __('docs.modules.orderitems.name') }}</h6>
+        <p>@lang('docs.modules.orderitems.desc')</p>
+        <ul>
+          <li>@lang('docs.modules.orderitems.points.0')</li>
+          <li>@lang('docs.modules.orderitems.points.1')</li>
+          <li>@lang('docs.modules.orderitems.points.2')</li>
+        </ul>
+        <p class="mb-1"><strong>@lang('docs.who_uses')</strong> @lang('docs.modules.orderitems.who')</p>
+        <p class="mb-0"><strong>@lang('docs.related')</strong> @lang('docs.modules.orderitems.related')</p>
 
       </div>
     </div>
@@ -200,6 +233,9 @@
             <tr><td>{{ __('docs.modules.users.name') }}</td><td>CRUD</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
             <tr><td>{{ __('docs.modules.roles.name') }}</td><td>CRUD</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
             <tr><td>{{ __('docs.modules.languages.name') }}</td><td>CRUD</td><td>R</td><td>R</td><td>R</td><td>R</td></tr>
+            <tr><td>{{ __('docs.modules.services.name') }}</td><td>CRUD</td><td>CRUD</td><td>R</td><td>R</td><td>R</td></tr>
+            <tr><td>{{ __('docs.modules.orders.name') }}</td><td>CRUD</td><td>CRUD</td><td>R</td><td>CRUD (own)</td><td>CRUD (own)</td></tr>
+            <tr><td>{{ __('docs.modules.orderitems.name') }}</td><td>CRUD</td><td>CRUD</td><td>R</td><td>CRUD (own)</td><td>CRUD (own)</td></tr>
           </tbody>
         </table>
         <p class="text-muted small mb-0">@lang('docs.role_matrix.legend')</p>
@@ -237,6 +273,12 @@
           <dd class="col-sm-9">@lang('docs.glossary.capacity_def')</dd>
           <dt class="col-sm-3">{{ __('docs.glossary.stackable') }}</dt>
           <dd class="col-sm-9">@lang('docs.glossary.stackable_def')</dd>
+          <dt class="col-sm-3">{{ __('docs.glossary.service') }}</dt>
+          <dd class="col-sm-9">@lang('docs.glossary.service_def')</dd>
+          <dt class="col-sm-3">{{ __('docs.glossary.order') }}</dt>
+          <dd class="col-sm-9">@lang('docs.glossary.order_def')</dd>
+          <dt class="col-sm-3">{{ __('docs.glossary.order_item') }}</dt>
+          <dd class="col-sm-9">@lang('docs.glossary.order_item_def')</dd>
         </dl>
       </div>
     </div>
