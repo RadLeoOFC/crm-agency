@@ -109,6 +109,6 @@ class OrderItemController extends Controller
 
     private function calculateSubtotalPrice($qty, $price)
     {
-        return round($qty * $price);
+        return ($qty * $price);
     }
 }
