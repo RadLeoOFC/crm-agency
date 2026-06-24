@@ -447,6 +447,44 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Invoices
+    |--------------------------------------------------------------------------
+    */
+    'invoices' => [
+        'title' => 'Rechnungen',
+        'title_edit' => 'Rechnung bearbeiten',
+        'title_create' => 'Neue Rechnung hinzufügen',
+        'add' => 'Rechnung hinzufügen',
+        'update_button' => 'Rechnung aktualisieren',
+        'create_button' => 'Rechnung erstellen',
+        'confirm_delete' => 'Möchten Sie diese Rechnung wirklich löschen?',
+
+        'fields' => [
+            'client' => 'Kunde',
+            'client_name' => 'Kundenname',
+            'client_select' => 'Kunden auswählen',
+            'order' => 'Auftrag',
+            'order_id' => 'Auftrags-ID',
+            'order_select' => 'Auftrag auswählen',
+            'booking' => 'Buchung',
+            'booking_id' => 'Buchung',
+            'booking_select' => 'Buchung auswählen',
+            'currency' => 'Währung',
+            'amount_due' => 'Fälliger Betrag',
+            'status' => 'Status',
+            'issued_at' => 'Ausgestellt am',
+            'due_at' => 'Fällig am',
+            'sent_at' => 'Gesendet am',
+            'paid_at' => 'Bezahlt am',
+            'voided_at' => 'Storniert am',
+            'public_token' => 'Öffentliches Token',
+            'purpose' => 'Zweck',
+            'notes' => 'Notizen',
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Users
     |--------------------------------------------------------------------------
     */

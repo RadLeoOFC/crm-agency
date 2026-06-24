@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit Invoice')
+@section('title', __('messages.invoices.title_edit'))
 
 @section('content_header')
     <h1>{{__('messages.invoices.title_edit')}}</h1>

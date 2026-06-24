@@ -451,6 +451,44 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Invoices
+    |--------------------------------------------------------------------------
+    */
+    'invoices' => [
+        'title' => 'Invoices',
+        'title_edit' => 'Edit Invoice',
+        'title_create' => 'Add New Invoice',
+        'add' => 'Add invoice',
+        'update_button' => 'Update invoice',
+        'create_button' => 'Create invoice',
+        'confirm_delete' => 'Are you sure you want to delete this invoice?',
+
+        'fields' => [
+            'client' => 'Client',
+            'client_name' => 'Client name',
+            'client_select' => 'Select client',
+            'order' => 'Order',
+            'order_id' => 'Order ID',
+            'order_select' => 'Select order',
+            'booking' => 'Booking',
+            'booking_id' => 'Booking',
+            'booking_select' => 'Select booking',
+            'currency' => 'Currency',
+            'amount_due' => 'Amount due',
+            'status' => 'Status',
+            'issued_at' => 'Issued at',
+            'due_at' => 'Due at',
+            'sent_at' => 'Sent at',
+            'paid_at' => 'Paid at',
+            'voided_at' => 'Voided at',
+            'public_token' => 'Public token',
+            'purpose' => 'Purpose',
+            'notes' => 'Notes',
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Users
     |--------------------------------------------------------------------------
     */

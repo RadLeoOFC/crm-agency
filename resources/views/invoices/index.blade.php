@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Invoices')
+@section('title', __('messages.invoices.title'))
 
 @section('content_header')
     <div class="d-flex justify-content-between">
