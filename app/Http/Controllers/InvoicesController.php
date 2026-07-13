@@ -13,12 +13,14 @@ class InvoicesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, Invoice $invoice)
+    public function index(Request $request, Invoice $invoice, Client $client)
     {
-        $query = Invoice::with('booking', 'order');
+        $query = Invoice::with('booking', 'order', 'client');
         // Only show own orders if not admin/manager
         if (!Auth::user()->hasRole(['admin', 'manager'])) {
-            $query->where('user_id', Auth::id());
+            $query->whereHas('client', function ($q) {
+                $q->where('user_id', Auth::id());
+            });
         }
         $invoices = $query->latest()->paginate(10);
         return view('invoices.index', compact('invoices'));
