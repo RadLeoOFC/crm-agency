@@ -16,11 +16,12 @@ class InvoicesController extends Controller
     public function index(Request $request, Invoice $invoice, Client $client)
     {
         $query = Invoice::with('booking', 'order', 'client');
-        // Only show own orders if not admin/manager
-        if (!Auth::user()->hasRole(['admin', 'manager'])) {
+        // Only show own invoices if not admin/manager
+        if (!Auth::user()->hasRole(['admin', 'manager', 'accountant'])) {
             $query->whereHas('client', function ($q) {
                 $q->where('user_id', Auth::id());
             });
+            $query->whereIn('status', ['sent', 'partially_paid', 'paid', 'void']);
         }
         $invoices = $query->latest()->paginate(10);
         return view('invoices.index', compact('invoices'));
