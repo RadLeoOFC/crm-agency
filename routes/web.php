@@ -17,6 +17,8 @@ use App\Http\Controllers\PromoRedemptionController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\PaymentController;
 use App\Models\Language;
 use Illuminate\Support\Facades\Route;
 
@@ -82,6 +84,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     Route::middleware('permission:orderitems.create')->group(function () {
         Route::get('orders/{order}/orderitems/create', [OrderItemController::class, 'create'])->name('orderitems.create');
+    });
+    Route::middleware('permission:invoices.create')->group(function () {
+        Route::get('invoices/create', [InvoicesController::class, 'create'])->name('invoices.create');
+    });
+    Route::middleware('permission:payments.create')->group(function () {
+        Route::get('payments/create', [PaymentController::class, 'create'])->name('payments.create');
     });
     // Platforms management
     Route::middleware('permission:platforms.view')->group(function () {
@@ -395,6 +403,39 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('languages/{language}', [LanguageController::class, 'destroy'])
         ->middleware('permission:languages.delete')
         ->name('languages.destroy');
+
+    // Invoices management
+    Route::middleware('permission:invoices.view')->group(function () {
+        Route::get('invoices', [InvoicesController::class, 'index'])->name('invoices.index');
+        Route::get('invoices/{invoice}', [InvoicesController::class, 'show'])->name('invoices.show');
+    });
+
+    Route::middleware('permission:invoices.create')->group(function () {
+        Route::get('invoices/create', [InvoicesController::class, 'create'])->name('invoices.create');
+        Route::post('invoices', [InvoicesController::class, 'store'])->name('invoices.store');
+    });
+
+    Route::middleware('permission:invoices.edit')->group(function () {
+        Route::get('invoices/{invoice}/edit', [InvoicesController::class, 'edit'])->name('invoices.edit');
+        Route::put('invoices/{invoice}', [InvoicesController::class, 'update'])->name('invoices.update');
+    });
+
+    Route::delete('invoices/{invoice}', [InvoicesController::class, 'destroy'])
+        ->middleware('permission:invoices.delete')
+        ->name('invoices.destroy');
+
+    Route::put('invoices/{invoice}/publish', [InvoicesController::class, 'publish'])
+        ->middleware('permission:invoices.publish')
+        ->name('invoices.publish');
+
+    Route::put('invoices/{invoice}/send', [InvoicesController::class, 'send'])
+        ->middleware('permission:invoices.send')
+        ->name('invoices.send');
+
+    Route::get('invoices/{invoice}/paymentPage', [InvoicesController::class, 'paymentPage'])
+        ->middleware('permission:invoices.paymentPage')
+        ->name('invoices.paymentPage');
+
 
     Route::get('/help', fn () => view('user_guide'))->name('help.user');
 

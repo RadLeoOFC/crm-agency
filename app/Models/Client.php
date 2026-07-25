@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
@@ -10,7 +11,7 @@ class Client extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','contact_person','email','phone','company',
+        'user_id', 'name','contact_person','email','phone','company',
         'vat_number','country','city','address','is_active'
     ];
 
@@ -26,5 +27,10 @@ class Client extends Model
     public function promoRedemptions()
     {
         return $this->hasMany(PromoRedemption::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'email', 'email');
     }
 }

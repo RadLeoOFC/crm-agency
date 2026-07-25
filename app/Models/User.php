@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Translation\HasLocalePreference;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -53,5 +54,20 @@ class User extends Authenticatable implements HasLocalePreference
     public function preferredLocale()
     {
         return $this->locale ?: config('app.locale');
+    }
+
+    public function client(): HasOne
+    {
+        return $this->hasOne(Client::class, 'email', 'email');
+    }
+
+    protected static function booted() {
+        static::created(function ($user) {
+            $user->client()->create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'user_id' => $user->id,
+            ]);
+        });
     }
 }

@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             PromoRedemptionsPermissionsSeeder::class,
             ServicesAndOrdersPermissionsSeeder::class,
             LanguagesSeeder::class,
+            InvoicesAndPaymentsPermissionsSeeder::class,
         ]);
     }
 }

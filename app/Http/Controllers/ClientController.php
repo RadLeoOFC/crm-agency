@@ -40,14 +40,14 @@ class ClientController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'contact_person' => 'required|string|max:255',
+            'contact_person' => 'nullable|string|max:255',
             'email' => 'required|string|max:1000',
-            'phone' => 'required|string|max:255',
-            'company' => 'required|string|max:255',
-            'vat_number' => 'required|string|max:255',
-            'country' => 'required|string|max:100',
-            'city' => 'required|string|max:100',
-            'address' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:255',
+            'company' => 'nullable|string|max:255',
+            'vat_number' => 'nullable|string|max:255',
+            'country' => 'nullable|string|max:100',
+            'city' => 'nullable|string|max:100',
+            'address' => 'nullable|string|max:255',
             'is_active' => 'boolean',
         ]);
 

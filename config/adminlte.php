@@ -148,5 +148,22 @@ return [
                 ],
             ],
         ],
+
+        [
+            'text' => 'Invoices',
+            'icon' => 'fas fa-file-invoice-dollar',
+            'submenu' => [
+                [
+                    'text' => 'Invoices',
+                    'url'  => 'invoices',
+                    'icon' => 'fas fa-file-invoice-dollar',
+                ],
+                [
+                    'text' => 'Payments',
+                    'url'  => 'payments',
+                    'icon' => 'fas fa-credit-card'
+                ],
+            ],
+        ],
     ],
 ];
