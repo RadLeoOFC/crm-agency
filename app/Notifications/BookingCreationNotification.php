@@ -11,18 +11,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class BookingCreationNotification extends Notification
+class BookingCreationNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $user;
+    protected User $user;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($user)
+    public function __construct(User $user)
     {
         $this->user = $user;
+
+        $this->onQueue('notifications');
+        $this->afterCommit();
     }
 
     /**
