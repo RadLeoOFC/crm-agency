@@ -19,11 +19,16 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\PaymentController;
+use Inertia\Inertia;
 use App\Models\Language;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia::render('home');
+});
+
+Route::get('/testpage', function () {
+    return Inertia::render('Test_page');
 });
 
 Route::get('/dashboard', function () {
